@@ -5,7 +5,7 @@ import {
   LayoutPanelTop,
   Search,
   ShieldCheck,
-} from "lucide-react";
+} from "@/components/ui/icons";
 import { GlassCard } from "./ui/GlassCard";
 import { SectionHeading } from "./ui/SectionHeading";
 import { Reveal } from "./ui/Reveal";

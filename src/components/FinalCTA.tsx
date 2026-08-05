@@ -1,4 +1,4 @@
-import { Github } from "lucide-react";
+import { Github } from "@/components/ui/icons";
 import { Reveal } from "./ui/Reveal";
 import { Aurora } from "./ui/Aurora";
 

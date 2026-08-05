@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { ArrowRight, Github, Sparkles } from "lucide-react";
+import { ArrowRight, Github, Sparkles } from "@/components/ui/icons";
 import { NotchSimulator } from "./NotchSimulator";
 import { Aurora } from "./ui/Aurora";
 import { cn } from "@/lib/cn";

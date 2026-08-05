@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { KeyRound, Lock, ShieldCheck, Timer } from "lucide-react";
+import { KeyRound, Lock, ShieldCheck, Timer } from "@/components/ui/icons";
 import { SectionHeading } from "./ui/SectionHeading";
 import { Reveal } from "./ui/Reveal";
 import { cn } from "@/lib/cn";

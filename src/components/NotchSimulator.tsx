@@ -13,7 +13,7 @@ import {
   Scissors,
   Search,
   Type,
-} from "lucide-react";
+} from "@/components/ui/icons";
 import { CATEGORIES, CLIPS, type Clip, type ClipCategory } from "@/lib/clips";
 import { cn } from "@/lib/cn";
 

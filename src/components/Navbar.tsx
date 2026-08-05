@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Github, Scissors, Download } from "lucide-react";
+import { Github, Scissors, Download } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
 
 const LINKS = [

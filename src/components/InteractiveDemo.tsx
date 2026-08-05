@@ -1,4 +1,4 @@
-import { Copy, Keyboard, MousePointerClick, Search } from "lucide-react";
+import { Copy, Keyboard, MousePointerClick, Search } from "@/components/ui/icons";
 import { NotchSimulator } from "./NotchSimulator";
 import { SectionHeading } from "./ui/SectionHeading";
 import { Reveal } from "./ui/Reveal";

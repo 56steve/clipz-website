@@ -1,4 +1,4 @@
-import { Github, Scissors } from "lucide-react";
+import { Github, Scissors } from "@/components/ui/icons";
 
 const COLS: { title: string; links: { label: string; href: string }[] }[] = [
   {
