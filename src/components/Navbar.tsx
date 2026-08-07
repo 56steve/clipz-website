@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Github, Scissors, Download } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
 
 const LINKS = [
-  { href: "#features", label: "Features" },
-  { href: "#demo", label: "Live Demo" },
+  { href: "#how", label: "How it works" },
   { href: "#security", label: "Security" },
   { href: "#shortcuts", label: "Shortcuts" },
 ];
@@ -22,26 +20,28 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-3">
+    <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4">
       <nav
         className={cn(
-          "flex w-full max-w-[1120px] items-center gap-4 rounded-full px-4 py-2.5 transition-all duration-300",
-          scrolled ? "glass" : "bg-transparent"
+          "flex w-full max-w-[1120px] items-center gap-6 rounded-2xl px-5 py-3 transition-all duration-300",
+          scrolled
+            ? "border border-[var(--border)] bg-[rgba(11,11,18,0.72)] backdrop-blur-xl"
+            : "bg-transparent"
         )}
       >
-        <a href="#top" className="flex items-center gap-2 pl-1">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-[var(--color-violet-deep)] text-white">
-            <Scissors className="h-4 w-4" />
+        <a href="#top" className="text-[0.98rem] font-semibold tracking-tight">
+          Clipz
+          <span className="ml-1.5 font-mono text-[0.68rem] font-normal text-faint">
+            v2.0.1
           </span>
-          <span className="text-[1.05rem] font-semibold tracking-tight">Clipz</span>
         </a>
 
-        <ul className="ml-2 hidden items-center gap-1 md:flex">
+        <ul className="ml-6 hidden items-center gap-6 md:flex">
           {LINKS.map((l) => (
             <li key={l.href}>
               <a
                 href={l.href}
-                className="rounded-full px-3 py-2 text-sm text-muted transition-colors hover:bg-white/[0.05] hover:text-text"
+                className="text-sm text-muted transition-colors hover:text-text"
               >
                 {l.label}
               </a>
@@ -49,27 +49,12 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="ml-auto flex items-center gap-2">
-          <a
-            href="https://github.com/56steve/clipz"
-            target="_blank"
-            rel="noreferrer"
-            className="hidden items-center gap-2 rounded-full border border-[var(--border-strong)] px-3.5 py-2 text-sm text-muted transition-colors hover:border-[var(--border-glow)] hover:text-text sm:flex"
-          >
-            <Github className="h-4 w-4" />
-            <span>Star</span>
-            <span className="rounded-full bg-white/[0.06] px-1.5 py-0.5 text-xs text-faint">
-              2.4k
-            </span>
-          </a>
-          <a
-            href="#download"
-            className="flex items-center gap-2 rounded-full bg-[var(--color-violet-deep)] px-4 py-2 text-sm font-medium text-white shadow-[0_6px_24px_-8px_rgba(109,92,255,0.8)] transition-all hover:-translate-y-0.5 hover:bg-[var(--color-violet)]"
-          >
-            <Download className="h-4 w-4" />
-            <span className="hidden sm:inline">Download</span>
-          </a>
-        </div>
+        <a
+          href="#download"
+          className="ml-auto rounded-full bg-white/[0.06] px-4 py-1.5 text-sm font-medium text-text ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.1]"
+        >
+          Download
+        </a>
       </nav>
     </header>
   );
