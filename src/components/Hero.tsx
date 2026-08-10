@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { NotchSimulator } from "./NotchSimulator";
-import { Aurora } from "./ui/Aurora";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -10,12 +9,10 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden px-4 pb-20 pt-36 sm:pt-44"
+      className="relative overflow-hidden px-4 pb-24 pt-36 sm:pt-44"
     >
-      <Aurora />
-
       <div className="container-page flex flex-col items-center text-center">
-        <span className="mb-8 inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-faint">
+        <span className="mb-8 inline-flex items-center gap-3 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-faint">
           <span className="h-px w-6 bg-[var(--border-strong)]" />
           Clipboard, reimagined
           <span className="h-px w-6 bg-[var(--border-strong)]" />
@@ -55,26 +52,57 @@ export function Hero() {
 
       <FadeUp reduce={reduce}>
         <div className="container-page mt-20">
-          <div className="relative mx-auto max-w-[980px]">
-            <div className="relative overflow-hidden rounded-[24px] border border-[var(--border)] bg-[#0a0a12] p-2 shadow-[0_50px_120px_-40px_rgba(0,0,0,0.9)]">
-              <div className="relative h-[380px] overflow-hidden rounded-[16px] bg-[radial-gradient(120%_100%_at_50%_-20%,#1a1730_0%,#0b0b14_55%,#08080d_100%)] sm:h-[440px]">
-                <div className="absolute left-8 top-24 hidden h-40 w-64 rotate-[-4deg] rounded-xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm sm:block" />
-                <div className="absolute right-10 top-32 hidden h-48 w-56 rotate-[3deg] rounded-xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm sm:block" />
-
-                <div className="absolute inset-x-0 top-3 z-10">
-                  <NotchSimulator defaultExpanded />
-                </div>
-
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#08080d] to-transparent" />
+          <figure className="relative mx-auto max-w-[980px]">
+            <ProductStage>
+              <div className="absolute inset-x-0 top-3 z-10">
+                <NotchSimulator defaultExpanded />
               </div>
-            </div>
-            <p className="mt-4 text-center font-mono text-[0.72rem] text-faint">
+            </ProductStage>
+            <figcaption className="mt-4 text-center font-mono text-[0.72rem] text-faint">
               hover to expand &middot; arrow keys and enter to navigate
-            </p>
-          </div>
+            </figcaption>
+          </figure>
         </div>
       </FadeUp>
     </section>
+  );
+}
+
+/**
+ * Product stage: a plain near-black canvas with a single soft ceiling light.
+ * No color wash, no drift. The product is the subject.
+ */
+function ProductStage({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative overflow-hidden rounded-[24px] border border-[var(--border)] bg-[#0a0a10] p-2 shadow-[0_50px_120px_-40px_rgba(0,0,0,0.9)]">
+      <div className="relative h-[380px] overflow-hidden rounded-[16px] bg-[#08080d] sm:h-[440px]">
+        {/* soft ceiling light, static */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-64"
+          style={{
+            background:
+              "radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,0.06), transparent 70%)",
+          }}
+        />
+        {/* faint dot grid, top-anchored, mostly hidden */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.35]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0)",
+            backgroundSize: "28px 28px",
+            maskImage:
+              "radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 100%)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 100%)",
+          }}
+        />
+        {children}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#08080d] to-transparent" />
+      </div>
+    </div>
   );
 }
 

@@ -21,11 +21,22 @@ export function InteractiveDemo() {
           about it is a screenshot.
         </p>
 
-        <div className="relative flex min-h-[500px] items-start justify-center overflow-hidden rounded-[20px] border border-[var(--border)] bg-[radial-gradient(120%_100%_at_50%_-10%,#161327_0%,#0a0a12_60%)] px-4 pt-8">
-          <div className="absolute inset-x-0 top-6 z-10">
-            <NotchSimulator defaultExpanded />
+        <figure className="relative overflow-hidden rounded-[20px] border border-[var(--border)] bg-[#08080d]">
+          {/* soft ceiling light, static */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-64"
+            style={{
+              background:
+                "radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,0.05), transparent 70%)",
+            }}
+          />
+          <div className="relative flex min-h-[500px] items-start justify-center px-4 pt-8">
+            <div className="absolute inset-x-0 top-6 z-10">
+              <NotchSimulator defaultExpanded />
+            </div>
           </div>
-        </div>
+        </figure>
       </div>
     </section>
   );

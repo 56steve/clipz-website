@@ -41,7 +41,6 @@
   --border: rgba(255, 255, 255, 0.08);
   --border-strong: rgba(255, 255, 255, 0.14);
   --border-glow: rgba(139, 124, 255, 0.35);
-  --gradient-brand: linear-gradient(120deg, #8b7cff 0%, #4c7dff 45%, #3de0f0 100%);
   --glass-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.06) inset,
     0 20px 60px -22px rgba(0, 0, 0, 0.75);
 }
@@ -131,64 +130,16 @@ h1, h2, h3, h4 {
     box-shadow: var(--glass-shadow);
   }
 
-  .text-gradient {
-    background: var(--gradient-brand);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .border-gradient {
-    position: relative;
-  }
-  .border-gradient::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: var(--gradient-brand);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0.5;
-    pointer-events: none;
-  }
-
-  /* Fine film-grain to add analog depth + kill banding */
+  /* Fine film-grain to add analog depth and kill banding. */
   .grain::after {
     content: "";
     position: fixed;
     inset: 0;
     z-index: 60;
     pointer-events: none;
-    opacity: 0.035;
+    opacity: 0.03;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
-
-  .glow-violet {
-    box-shadow: 0 0 0 1px var(--border-glow), 0 0 40px -8px rgba(139, 124, 255, 0.45);
-  }
-
-  .mask-fade-b {
-    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
-  }
-}
-
-@keyframes aurora-drift {
-  0%, 100% { transform: translate3d(-4%, -2%, 0) rotate(0deg) scale(1.1); }
-  50% { transform: translate3d(4%, 3%, 0) rotate(12deg) scale(1.25); }
-}
-
-@keyframes float-slow {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

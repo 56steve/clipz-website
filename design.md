@@ -1,176 +1,221 @@
-# Clipz — Design System & Art Direction
+# Clipz, Design System
 
-> The Dynamic Island Clipboard Hub for Windows.
-> This document is the single source of truth for the visual language, motion, and
-> component decisions behind the Clipz marketing site. If a choice isn't written
-> here, it should be derived from the principles here — not invented ad-hoc.
-
----
-
-## 1. Design Principles
-
-1. **Precision over decoration.** Clipz is a power-user tool. Every pixel should feel
-   engineered — tight tracking, deliberate spacing, no filler ornament.
-2. **Show, don't tell.** The hero *is* the product. We simulate the real Dynamic Island
-   notch so visitors feel the interaction before they download.
-3. **Restrained neon.** The canvas is near-black and monochrome. Color (violet → cyan)
-   is a spotlight, not wallpaper. If everything glows, nothing glows.
-4. **Depth through glass, not gradients.** Layering, blur, and 1px light borders create
-   hierarchy. Avoid the generic "purple blob" gradient-soup look.
-5. **Motion with intent.** Animation communicates state (expand, copy, filter). Nothing
-   moves just to move. Respect `prefers-reduced-motion`.
+The Dynamic Island clipboard hub for Windows.
+This document is the single source of truth for the visual language, motion, and
+component decisions behind the marketing site. If a choice is not written here,
+derive it from the principles here rather than invent one.
 
 ---
 
-## 2. Color System
+## 1. Point of view
 
-All colors are defined as CSS custom properties / Tailwind theme tokens.
+Clipz is a power-user tool. The site should feel like a well-set piece of
+technical writing, not a neon showcase. Three rules override everything else:
 
-### Base (dark canvas)
-| Token            | Hex        | Use                                   |
-|------------------|------------|---------------------------------------|
-| `--bg`           | `#060609`  | Page background (near-black, blue-cast)|
-| `--bg-elevated`  | `#0B0B12`  | Section contrast                       |
-| `--surface`      | `#111119`  | Card / glass base                      |
-| `--surface-2`    | `#16161F`  | Raised glass                           |
-| `--border`       | `rgba(255,255,255,0.08)` | Hairline dividers        |
-| `--border-glow`  | `rgba(139,124,255,0.35)` | Focused / hover borders  |
+1. **Restraint over decoration.** A near-black canvas, off-white text, one violet
+   accent used maybe three times on the page. When in doubt, remove.
+2. **The product is the visual.** The interactive notch is the hero. Every other
+   section is prose and diagrams that support it. No stock illustration, no
+   generative texture masquerading as content.
+3. **Type is the design.** Tight display type, comfortable body measure, mono
+   for spec captions and shortcuts. Section headers sit above hairline rules
+   with a mono counter on the right (`Three parts`, `Four mechanisms`).
+
+Anti-patterns the site deliberately avoids: drifting conic-gradient blobs,
+rainbow gradient headlines, glowing "bento" cards, and eyebrow icons with
+decorative sparkles.
+
+---
+
+## 2. Color
+
+The canvas is monochrome. Color is functional.
+
+### Base
+| Token            | Hex        | Use                                    |
+|------------------|------------|----------------------------------------|
+| `--color-bg`     | `#060609`  | Page background                        |
+| `--color-bg-elevated` | `#0b0b12` | Contrast section (Security)         |
+| `--color-surface` | `#111119` | Card / glass base (notch drawer only)  |
+| `--color-surface-2` | `#16161f` | Raised glass (kbd caps)              |
+| `--border`       | rgba white 0.08 | Hairline dividers                 |
+| `--border-strong`| rgba white 0.14 | Emphasis rules                    |
 
 ### Text
-| Token          | Hex        | Use                    |
-|----------------|------------|------------------------|
-| `--text`       | `#F4F5FB`  | Primary                |
-| `--text-muted` | `#9A9AB0`  | Secondary / body       |
-| `--text-faint` | `#5B5B70`  | Captions, labels       |
+| Token           | Hex      | Use                             |
+|-----------------|----------|---------------------------------|
+| `--color-text`  | `#f4f5fb`| Primary                         |
+| `--color-muted` | `#9a9ab0`| Body copy                       |
+| `--color-faint` | `#5b5b70`| Captions, mono metadata         |
 
-### Accent (the spotlight)
-| Token           | Hex        | Role                          |
-|-----------------|------------|-------------------------------|
-| `--violet`      | `#8B7CFF`  | Primary brand accent          |
-| `--violet-deep` | `#6D5CFF`  | Buttons, active states        |
-| `--cyan`        | `#3DE0F0`  | Secondary accent / search     |
-| `--blue`        | `#4C7DFF`  | Links / code category         |
-| `--emerald`     | `#38E0A5`  | Success / "copied"            |
-| `--amber`       | `#FFC24B`  | Sensitive / credentials       |
+### Accent (single)
+`--color-violet: #8b7cff`, deep variant `#6d5cff`.
+Used on: the primary Download CTA, the eyebrow labels above section headings,
+the classifier legend in HowItWorks. Nowhere else.
 
-**Signature gradient:** `linear-gradient(120deg, #8B7CFF 0%, #4C7DFF 45%, #3DE0F0 100%)`
-Used sparingly for the wordmark, primary CTA sheen, and key underlines.
+### Category colors (functional only)
+The four clipboard categories carry their own hue so the eye can pick them out
+in the notch drawer and the "capture" diagram. They are **not** used as
+decoration elsewhere.
+- Plain text: `--color-muted`
+- Code: `--color-blue` (#4c7dff)
+- Links: `--color-cyan` (#3de0f0)
+- Sensitive: `--color-amber` (#ffc24b)
 
-### Category color mapping (used across UI demo & filters)
-- Plain Text → `--text-muted` / slate
-- Code Snippets → `--blue`
-- Web Links → `--cyan`
-- Sensitive Credentials → `--amber`
+There is **no** gradient utility. Do not add one.
 
 ---
 
 ## 3. Typography
 
-- **Display / Headings:** `Outfit` (600–700). Geometric, modern, confident.
-- **Body / UI:** `Inter` (400–500). Neutral, legible at small sizes.
-- **Mono / code & shortcuts:** `JetBrains Mono` (or `Geist Mono` fallback).
+- **Display / headings:** `Outfit` (600). Tight tracking, `-0.02em` to `-0.03em`.
+- **Body / UI:** `Inter` (400 / 500).
+- **Mono:** `JetBrains Mono` (400 / 500). Used for eyebrows, spec bullets,
+  keyboard caps, footer counters, and any numeric metadata.
 
-Loaded via `next/font/google` (self-hosted, zero layout shift).
+Loaded via `next/font/google`, self-hosted, no layout shift.
 
-### Scale (fluid, clamp-based)
-| Role        | Size (clamp)                         | Tracking | Weight |
-|-------------|--------------------------------------|----------|--------|
-| Display XL  | `clamp(2.75rem, 6vw, 5.25rem)`       | -0.03em  | 700    |
-| H2          | `clamp(2rem, 4vw, 3.25rem)`          | -0.02em  | 600    |
-| H3          | `clamp(1.25rem, 2vw, 1.6rem)`        | -0.01em  | 600    |
-| Body Lg     | `1.125rem` / 1.6                      | 0        | 400    |
-| Body        | `1rem` / 1.65                         | 0        | 400    |
-| Label/Eyebrow | `0.8125rem` uppercase              | 0.14em   | 500    |
-| Mono kbd    | `0.8125rem`                          | 0        | 500    |
-
----
-
-## 4. Spacing, Radius, Grid
-
-- **Spacing scale:** 8px base (4, 8, 12, 16, 24, 32, 48, 64, 96, 128).
-- **Section rhythm:** vertical padding `clamp(6rem, 12vw, 10rem)`.
-- **Container:** max-width `1200px`, gutter `clamp(1.25rem, 5vw, 2rem)`.
-- **Radius:** sm `10px`, md `16px`, lg `24px`, pill `999px`. Glass cards use `lg`.
-- **Grid:** 12-col mental model; feature grid is a bento (asymmetric) layout, not 3 equal cards.
+### Scale
+| Role         | Size                                | Weight |
+|--------------|-------------------------------------|--------|
+| Display XL   | `clamp(2.75rem, 6vw, 5rem)`         | 600    |
+| Section H2   | `clamp(1.75rem, 3.2vw, 2.5rem)`     | 600    |
+| Sub H3       | `clamp(1.6rem, 2.6vw, 2.15rem)`     | 600    |
+| Body         | `1rem` / 1.65                       | 400    |
+| Body large   | `1.075rem` / 1.6                    | 400    |
+| Mono caption | `0.72rem`, uppercase, `0.18em`      | 500    |
+| Mono spec    | `0.78rem`                            | 400    |
 
 ---
 
-## 5. Glassmorphism Recipe
+## 4. Layout
 
-```
-background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-backdrop-filter: blur(20px) saturate(140%);
-border: 1px solid var(--border);
-box-shadow:
-  0 1px 0 0 rgba(255,255,255,0.06) inset,   /* top light edge */
-  0 20px 60px -20px rgba(0,0,0,0.7);         /* soft drop */
-```
-Hover adds a `--border-glow` border and a faint radial accent bloom behind the card.
+- **Base spacing:** 8px scale (4, 8, 12, 16, 24, 32, 48, 64, 96, 128).
+- **Section rhythm:** `padding-block: clamp(6rem, 12vw, 10rem)`.
+- **Container:** `max-width: 1200px`, gutter `clamp(1.25rem, 5vw, 2rem)`.
+- **Radii:** small `10px`, medium `16px`, large `24px`. The notch drawer uses `22px`.
+- **Section separators:** a hairline `border-t` at the top of each section
+  reads as an editorial rule; no card wrappers.
+- **Section heading pattern:**
+  ```
+  Section title                              THREE PARTS
+  ─────────────────────────────────────────────────────
+  ```
+  H2 on the left, mono counter on the right, hairline rule under both.
 
-**Texture:** a subtle SVG grain/noise overlay at ~3% opacity on the page root adds
-analog depth and kills gradient banding. This is a key anti-"AI-slop" detail.
+---
+
+## 5. Backgrounds and depth
+
+The page background is a flat `--color-bg`. No animated aurora. No conic
+gradient. No cursor-follow glow.
+
+Depth comes from three quiet sources:
+
+1. **Film grain** at 3% opacity across the whole document. Kills banding on
+   dark surfaces and adds analog texture. Applied via `.grain` on `<body>`.
+2. **Product stages** (Hero and InteractiveDemo) are lit with a single soft
+   near-white radial from above and a very faint 28px dot grid, masked to the
+   top of the frame. The product is the subject, not the light.
+3. **Glass** is reserved for the notch pill and drawer. It exists because it
+   reflects what the real Windows app looks like. It is not used anywhere else
+   on the page.
 
 ---
 
 ## 6. Motion
 
-- **Library:** `motion` (Framer Motion) + CSS for ambient loops.
-- **Easing:** primary `cubic-bezier(0.22, 1, 0.36, 1)` (expo-out) for reveals;
-  spring `{ stiffness: 260, damping: 30 }` for the notch expand.
-- **Durations:** micro 150ms, standard 400ms, expressive 600–800ms.
-- **Scroll reveals:** fade + 16px rise, staggered 60–80ms, trigger once at 20% in view.
-- **Signature moments:**
-  - Notch pill → drawer spring expansion.
-  - "Copied" ping (emerald ring + checkmark) on paste.
-  - Cursor-follow radial glow in hero (desktop only).
-  - Ambient conic-gradient aurora drifting behind hero, very low opacity.
-- **Accessibility:** all non-essential motion gated behind `prefers-reduced-motion`.
+Restrained. If motion does not communicate state, remove it.
+
+- **Library:** `motion` (Framer Motion successor).
+- **Easings:** `cubic-bezier(0.22, 1, 0.36, 1)` for reveals and layout;
+  spring `{ stiffness: 260, damping: 30 }` for the notch expansion.
+- **Durations:** micro 150ms, standard 350-400ms, hero fade 800ms.
+- **Signature moment:** the notch pill springs open into the drawer.
+- **Copy ping:** a 1.4s emerald "Copied" chip appears next to the selected row.
+- **Everything else** (heading pops, per-card fades, scroll parallax) is
+  deliberately absent. The whole layout is not going to slide up on scroll.
+- **`prefers-reduced-motion`** is honored globally; the hero fade and the notch
+  spring both fall back to instant when set.
 
 ---
 
-## 7. Component Inventory
+## 7. Sections in order
 
-- `Navbar` — sticky glass bar, wordmark, anchor links, GitHub star pill, Download CTA.
-- `Hero` — headline, tagline, dual CTA, GitHub release badge, live **NotchSimulator**.
-- `NotchSimulator` — the centerpiece. Pill collapses/expands, tabbed categories,
-  fake-live clipboard feed, keyboard-navigable list, copy ping. Reused in hero + demo.
-- `StatStrip` — sub-ms search, <1% CPU, AES/DPAPI, 60s TTL — animated counters.
-- `BentoFeatures` — asymmetric glowing cards for the 6 core features.
-- `ShortcutSheet` — keyboard cheat-sheet grid with rendered `<kbd>` keys.
-- `TechStack` — minimalist badge strip (Tauri v2, Rust, Win32, SQLite FTS5, TypeScript).
-- `SecuritySection` — DPAPI + RAM TTL deep dive with a small animated diagram.
-- `FinalCTA` — download conversion block.
-- `Footer` — links, GitHub, MIT badge, copyright.
-- Primitives: `GlassCard`, `GradientText`, `Kbd`, `Button`, `SectionHeading`, `Badge`.
+1. **Navbar**, text wordmark `Clipz` with mono `v2.0.1`, three anchor
+   links, subtle Download pill. Glass background appears only after scroll.
+2. **Hero**, mono eyebrow, one-line display heading, one-paragraph body,
+   two CTAs (primary Download + text "View source"), mono spec line, then the
+   product stage with the live NotchSimulator.
+3. **HowItWorks** (`#how`), three numbered spreads (`01 / 02 / 03`),
+   alternating left/right. Each spread has a title, body, mono spec bullets on
+   a hairline rule, and a small custom diagram: the capture stream, the search
+   result panel, the sensitive-clip lifecycle.
+4. **InteractiveDemo** (`#demo`), a single product stage that says "this
+   is the real component, not a screenshot", with the NotchSimulator inside.
+5. **SecuritySection** (`#security`), a short editorial preface on the
+   left with a mono spec grid (`Storage`, `Network`, `Sensitive TTL`,
+   `License`) and a numbered `i / ii / iii / iv` list on the right.
+6. **ShortcutSheet** (`#shortcuts`), nine shortcuts in three groups,
+   rendered as a dense mono table with `<kbd>` caps.
+7. **FinalCTA** (`#download`), one sentence, one button, one mono
+   caption with the installer filename and hash line.
+8. **Footer**, wordmark, three link columns, mono copyright and version.
 
 ---
 
-## 8. Copy Voice
+## 8. Component inventory
+
+Live modules:
+- `Navbar`, `Hero`, `HowItWorks`, `InteractiveDemo`, `SecuritySection`,
+  `ShortcutSheet`, `FinalCTA`, `Footer`.
+- `NotchSimulator`, the interactive centerpiece, reused in Hero and
+  InteractiveDemo.
+- `ui/icons.tsx`, bespoke stroke SVGs. No icon-font dependency.
+- `ui/Kbd.tsx`, keyboard cap primitive.
+- `lib/clips.ts`, the seed data driving the notch demo.
+- `lib/cn.ts`, classname joiner.
+
+There is no `GlassCard`, `Reveal`, `SectionHeading`, `Aurora`, or `Button`
+primitive. Sections compose their own headings and stages inline because each
+one has a specific editorial voice; abstracting them would flatten the layout
+back into "cards on a page".
+
+---
+
+## 9. Copy voice
 
 Confident, technical, concrete. Lead with the benefit, back it with the spec.
-Avoid hype adjectives ("revolutionary", "game-changing"). Numbers beat adjectives:
-"sub-millisecond FTS5 search", "cleared from RAM after 60s", "<1% idle CPU".
+
+- Numbers beat adjectives: "sub-millisecond FTS5 search", "cleared from RAM
+  after 60s", "under 1% idle CPU".
+- Never say "revolutionary", "game-changing", "seamless", "leverage".
+- No em dashes. Use commas, periods, colons, or parentheses.
+- Mono captions are lowercase (`hover to expand`), uppercase mono is reserved
+  for eyebrow labels (`CAPTURE`, `THREE PARTS`).
 
 ---
 
-## 9. Accessibility & Quality Bar
+## 10. Accessibility bar
 
-- WCAG AA contrast for all text on their backgrounds.
-- Full keyboard operability; visible focus rings (violet).
-- Semantic landmarks (`header/main/section/footer`), single `h1`.
-- `prefers-reduced-motion` fully honored.
-- Responsive from 360px → 1440px+; the notch demo degrades gracefully on mobile.
-- Lighthouse targets: Performance ≥ 90, A11y ≥ 95, Best Practices ≥ 95.
+- WCAG AA contrast for every text-on-background pair.
+- Full keyboard operability. The notch drawer takes focus when expanded and
+  responds to Arrow/Enter/Escape.
+- Semantic landmarks (`header / main / section / footer`), one `<h1>`.
+- Focus rings visible in violet, offset 2px.
+- Responsive from 360px to 1440px+.
+- `prefers-reduced-motion` disables the hero fade and the notch spring.
 
 ---
 
-## 10. Anti-Slop Checklist
+## 11. Anti-slop checklist (before shipping any change)
 
-- [ ] No rainbow gradient soup — accent is spotlight only.
-- [ ] The hero demo is genuinely interactive, not a static screenshot.
-- [ ] Asymmetric bento layout, not 3 identical cards.
-- [ ] Real product copy with real numbers.
-- [ ] Grain texture + considered shadows for depth.
-- [ ] Consistent 8px spacing rhythm.
-- [ ] Custom, cohesive iconography treatment.
-- [ ] Motion respects reduced-motion.
+- [ ] No gradient text.
+- [ ] No conic-gradient or aurora backgrounds.
+- [ ] No glowing bento cards or `box-shadow` rainbows.
+- [ ] No sparkle / decorative icons in eyebrows.
+- [ ] Every color is either monochrome, functional (the four category hues),
+      or the one violet accent.
+- [ ] Animation is either the notch spring, the hero fade-up, or absent.
+- [ ] Copy contains real numbers and no em dashes.
+- [ ] The product carries the visual weight of the page.
