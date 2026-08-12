@@ -30,7 +30,7 @@ export function Hero() {
         <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row">
           <a
             href="#download"
-            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-violet-deep)] px-6 py-3 text-[0.95rem] font-medium text-white transition-colors hover:bg-[var(--color-violet)]"
+            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-violet-deep)] px-6 py-3 text-[0.95rem] font-medium text-white transition-all duration-200 hover:bg-[var(--color-violet)] hover:shadow-[0_0_25px_rgba(139,124,255,0.3)] hover:scale-[1.02]"
           >
             <WindowsGlyph className="h-4 w-4" />
             Download for Windows
@@ -39,7 +39,7 @@ export function Hero() {
             href="https://github.com/56steve/clipz"
             target="_blank"
             rel="noreferrer"
-            className="text-[0.95rem] text-muted transition-colors hover:text-text"
+            className="rounded-full px-4 py-2.5 text-[0.95rem] text-muted transition-colors hover:bg-white/[0.04] hover:text-text"
           >
             View source &rarr;
           </a>
@@ -74,33 +74,22 @@ export function Hero() {
  */
 function ProductStage({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative overflow-hidden rounded-[24px] border border-[var(--border)] bg-[#0a0a10] p-2 shadow-[0_50px_120px_-40px_rgba(0,0,0,0.9)]">
-      <div className="relative h-[380px] overflow-hidden rounded-[16px] bg-[#08080d] sm:h-[440px]">
-        {/* soft ceiling light, static */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-64"
-          style={{
-            background:
-              "radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,0.06), transparent 70%)",
-          }}
-        />
-        {/* faint dot grid, top-anchored, mostly hidden */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.35]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0)",
-            backgroundSize: "28px 28px",
-            maskImage:
-              "radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 100%)",
-            WebkitMaskImage:
-              "radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 100%)",
-          }}
-        />
+    <div className="relative overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[#0d0f17] shadow-2xl">
+      {/* Window Titlebar */}
+      <div className="flex items-center justify-between border-b border-[var(--border)] bg-[#12151f] px-4 py-3">
+        <div className="flex items-center gap-2">
+          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+        </div>
+        <div className="font-mono text-[0.72rem] text-faint">
+          Windows Desktop &middot; Clipz v2.0.1 Notch
+        </div>
+        <div className="w-12" />
+      </div>
+
+      <div className="relative h-[380px] overflow-hidden bg-[#090a0f] sm:h-[440px]">
         {children}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#08080d] to-transparent" />
       </div>
     </div>
   );

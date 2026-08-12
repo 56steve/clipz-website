@@ -1,37 +1,37 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------ */
-/*  Clipz Design Tokens  (see design.md)                              */
+/*  Clipz Soothing Matte Design Tokens                                */
 /* ------------------------------------------------------------------ */
 @theme {
-  /* Base canvas */
-  --color-bg: #060609;
-  --color-bg-elevated: #0b0b12;
-  --color-surface: #111119;
-  --color-surface-2: #16161f;
+  /* Soothing matte canvas */
+  --color-bg: #090a0f;
+  --color-bg-elevated: #0f1118;
+  --color-surface: #141720;
+  --color-surface-2: #1c202b;
 
   /* Text */
-  --color-text: #f4f5fb;
-  --color-muted: #9a9ab0;
-  --color-faint: #5b5b70;
+  --color-text: #edf0f5;
+  --color-muted: #949ba8;
+  --color-faint: #5c6370;
 
-  /* Accents */
-  --color-violet: #8b7cff;
-  --color-violet-deep: #6d5cff;
-  --color-cyan: #3de0f0;
-  --color-blue: #4c7dff;
-  --color-emerald: #38e0a5;
-  --color-amber: #ffc24b;
+  /* Accents (functional & restrained) */
+  --color-violet: #7c86ff;
+  --color-violet-deep: #5e6ad2;
+  --color-cyan: #38bdf8;
+  --color-blue: #60a5fa;
+  --color-emerald: #34d399;
+  --color-amber: #fbbf24;
 
-  /* Fonts (wired from next/font in layout.tsx) */
+  /* Fonts */
   --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono-jb), ui-monospace, "SFMono-Regular", monospace;
 
   /* Radii */
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
 
   /* Motion */
   --ease-expo: cubic-bezier(0.22, 1, 0.36, 1);
@@ -39,10 +39,9 @@
 
 :root {
   --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.14);
-  --border-glow: rgba(139, 124, 255, 0.35);
-  --glass-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.06) inset,
-    0 20px 60px -22px rgba(0, 0, 0, 0.75);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
 }
 
 /* ------------------------------------------------------------------ */
@@ -67,26 +66,26 @@ body {
 }
 
 ::selection {
-  background: rgba(139, 124, 255, 0.32);
+  background: rgba(124, 134, 255, 0.25);
   color: #fff;
 }
 
-/* Custom scrollbar (desktop) */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 11px;
-  height: 11px;
+  width: 10px;
+  height: 10px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 999px;
-  border: 3px solid transparent;
+  border: 2px solid transparent;
   background-clip: content-box;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.16);
   background-clip: content-box;
 }
 
@@ -100,7 +99,7 @@ h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: -0.02em;
-  line-height: 1.05;
+  line-height: 1.08;
 }
 
 /* ------------------------------------------------------------------ */
@@ -109,35 +108,35 @@ h1, h2, h3, h4 {
 @layer utilities {
   .container-page {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1140px;
     margin-inline: auto;
     padding-inline: clamp(1.25rem, 5vw, 2rem);
   }
 
   .section-pad {
-    padding-block: clamp(6rem, 12vw, 10rem);
+    padding-block: clamp(5.5rem, 10vw, 9rem);
+  }
+
+  .matte-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--card-shadow);
   }
 
   .glass {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.05),
-      rgba(255, 255, 255, 0.02)
-    );
-    backdrop-filter: blur(20px) saturate(140%);
-    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    background: rgba(18, 20, 27, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border);
-    box-shadow: var(--glass-shadow);
   }
 
-  /* Fine film-grain to add analog depth and kill banding. */
   .grain::after {
     content: "";
     position: fixed;
     inset: 0;
     z-index: 60;
     pointer-events: none;
-    opacity: 0.03;
+    opacity: 0.02;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
@@ -150,3 +149,4 @@ h1, h2, h3, h4 {
     scroll-behavior: auto !important;
   }
 }
+
