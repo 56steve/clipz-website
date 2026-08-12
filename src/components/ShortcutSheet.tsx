@@ -1,4 +1,8 @@
+"use client";
+
+import { useState } from "react";
 import { Kbd } from "./ui/Kbd";
+import { cn } from "@/lib/cn";
 
 type Row = { keys: React.ReactNode; label: string };
 
@@ -43,10 +47,16 @@ function Combo({ keys }: { keys: string[] }) {
 }
 
 export function ShortcutSheet() {
+  const [filter, setFilter] = useState("All");
+
+  const visibleGroups = ROWS.filter(
+    (g) => filter === "All" || g.title === filter
+  );
+
   return (
     <section id="shortcuts" className="section-pad border-t border-[var(--border)]">
       <div className="container-page">
-        <div className="mb-16 flex items-baseline justify-between gap-6 border-b border-[var(--border)] pb-6">
+        <div className="mb-12 flex items-baseline justify-between gap-6 border-b border-[var(--border)] pb-6">
           <h2 className="text-[clamp(1.75rem,3.2vw,2.5rem)] font-semibold tracking-[-0.02em]">
             Keyboard first.
           </h2>
@@ -55,9 +65,30 @@ export function ShortcutSheet() {
           </span>
         </div>
 
-        <div className="grid gap-x-12 gap-y-12 md:grid-cols-3">
-          {ROWS.map((g) => (
-            <div key={g.title}>
+        {/* Filter controls */}
+        <div className="mb-10 flex gap-2">
+          {["All", "Navigation", "Actions", "Global"].map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setFilter(cat)}
+              className={cn(
+                "rounded-full px-3 py-1 font-mono text-xs transition-colors cursor-pointer",
+                filter === cat
+                  ? "bg-white/[0.1] text-text font-medium ring-1 ring-white/20"
+                  : "text-faint hover:text-muted hover:bg-white/[0.04]"
+              )}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <div className={cn(
+          "grid gap-x-12 gap-y-12",
+          filter === "All" ? "md:grid-cols-3" : "grid-cols-1 max-w-lg"
+        )}>
+          {visibleGroups.map((g) => (
+            <div key={g.title} className="matte-card rounded-xl p-5">
               <h3 className="mb-6 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-violet">
                 {g.title}
               </h3>
@@ -65,7 +96,7 @@ export function ShortcutSheet() {
                 {g.items.map((it, i) => (
                   <li
                     key={i}
-                    className="flex items-center justify-between gap-4 py-3.5"
+                    className="flex items-center justify-between gap-4 py-3.5 transition-colors hover:bg-white/[0.02] px-2 rounded-lg"
                   >
                     <span className="text-[0.95rem] text-muted">{it.label}</span>
                     <span className="shrink-0">{it.keys}</span>
@@ -79,3 +110,4 @@ export function ShortcutSheet() {
     </section>
   );
 }
+

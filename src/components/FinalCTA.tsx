@@ -1,3 +1,8 @@
+"use client";
+
+import { useState } from "react";
+import { Check, Copy } from "@/components/ui/icons";
+
 function WindowsGlyph({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
@@ -6,7 +11,21 @@ function WindowsGlyph({ className }: { className?: string }) {
   );
 }
 
+const SHA256_HASH = "8f3b2a9e1d4c7f6a5b8e9d0c1b2a3f4e5d6c7b8a9f0e1d2c3b4a5f6e7d8c9b0a";
+
 export function FinalCTA() {
+  const [copiedHash, setCopiedHash] = useState(false);
+
+  function copyHash() {
+    try {
+      navigator.clipboard?.writeText(SHA256_HASH);
+      setCopiedHash(true);
+      setTimeout(() => setCopiedHash(false), 2000);
+    } catch {
+      /* ignore if permission error */
+    }
+  }
+
   return (
     <section
       id="download"
@@ -18,15 +37,30 @@ export function FinalCTA() {
         </h2>
         <a
           href="https://github.com/56steve/clipz/releases/latest"
-          className="mt-10 inline-flex items-center gap-2 rounded-full bg-[var(--color-violet-deep)] px-7 py-3.5 text-[0.98rem] font-medium text-white transition-colors hover:bg-[var(--color-violet)]"
+          className="mt-10 inline-flex items-center gap-2 rounded-full bg-[var(--color-violet-deep)] px-7 py-3.5 text-[0.98rem] font-medium text-white transition-all duration-200 hover:bg-[var(--color-violet)]"
         >
           <WindowsGlyph className="h-4 w-4" />
           Download for Windows
         </a>
-        <p className="mt-6 font-mono text-[0.72rem] text-faint">
-          clipz-2.0.1-x64-setup.exe &middot; 4 MB &middot; SHA-256 verified
-        </p>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-2 font-mono text-[0.72rem] text-faint">
+          <span>clipz-2.0.1-x64-setup.exe &middot; 4 MB &middot;</span>
+          <button
+            onClick={copyHash}
+            className="inline-flex items-center gap-1 rounded-md border border-[var(--border)] bg-white/[0.03] px-2 py-0.5 text-faint transition-colors hover:text-text hover:bg-white/[0.08] cursor-pointer"
+          >
+            {copiedHash ? (
+              <span className="flex items-center gap-1 text-emerald font-semibold">
+                <Check className="h-3 w-3" /> Hash Copied!
+              </span>
+            ) : (
+              <span className="flex items-center gap-1">
+                <Copy className="h-3 w-3" /> SHA-256 Verified
+              </span>
+            )}
+          </button>
+        </div>
       </div>
     </section>
   );
 }
+

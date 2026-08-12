@@ -31,13 +31,21 @@ const CAT_COLOR: Record<ClipCategory, string> = {
   secret: "var(--color-amber)",
 };
 
+export interface NotchSimulatorProps {
+  defaultExpanded?: boolean;
+  className?: string;
+  customClips?: Clip[];
+  highlightId?: string | null;
+  onClipSelect?: (clip: Clip) => void;
+}
+
 export function NotchSimulator({
   defaultExpanded = false,
   className,
-}: {
-  defaultExpanded?: boolean;
-  className?: string;
-}) {
+  customClips,
+  highlightId,
+  onClipSelect,
+}: NotchSimulatorProps) {
   const reduce = useReducedMotion();
   const [expanded, setExpanded] = useState(defaultExpanded);
   const [cat, setCat] = useState<ClipCategory | "all">("all");
@@ -47,20 +55,21 @@ export function NotchSimulator({
   const listRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
+  const displayClips = customClips || CLIPS;
+
   const clips = useMemo<Clip[]>(() => {
     const q = query.trim().toLowerCase();
-    return CLIPS.filter((c) => (cat === "all" ? true : c.category === cat)).filter(
-      (c) =>
-        q === "" ||
-        c.preview.toLowerCase().includes(q) ||
-        c.source.toLowerCase().includes(q)
-    );
-  }, [cat, query]);
+    return displayClips
+      .filter((c) => (cat === "all" ? true : c.category === cat))
+      .filter(
+        (c) =>
+          q === "" ||
+          c.preview.toLowerCase().includes(q) ||
+          c.source.toLowerCase().includes(q)
+      );
+  }, [displayClips, cat, query]);
 
-  // Keep selection in range when the filtered list changes.
-  useEffect(() => {
-    setSelected((s) => Math.min(s, Math.max(0, clips.length - 1)));
-  }, [clips.length]);
+  const selectedIndex = Math.min(selected, Math.max(0, clips.length - 1));
 
   // Focus the panel when it expands so keyboard nav works immediately.
   useEffect(() => {
@@ -70,6 +79,7 @@ export function NotchSimulator({
   function copy(clip: Clip | undefined) {
     if (!clip) return;
     setCopiedId(clip.id);
+    onClipSelect?.(clip);
     try {
       navigator.clipboard?.writeText(clip.value);
     } catch {
@@ -81,13 +91,13 @@ export function NotchSimulator({
   function onKeyDown(e: React.KeyboardEvent) {
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      setSelected((s) => Math.min(s + 1, clips.length - 1));
+      setSelected(Math.min(selectedIndex + 1, clips.length - 1));
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      setSelected((s) => Math.max(s - 1, 0));
+      setSelected(Math.max(selectedIndex - 1, 0));
     } else if (e.key === "Enter") {
       e.preventDefault();
-      copy(clips[selected]);
+      copy(clips[selectedIndex]);
     } else if (e.key === "Escape") {
       e.preventDefault();
       setExpanded(false);
@@ -96,9 +106,9 @@ export function NotchSimulator({
 
   // Scroll the selected row into view within the list.
   useEffect(() => {
-    const el = listRef.current?.querySelector<HTMLElement>(`[data-idx="${selected}"]`);
+    const el = listRef.current?.querySelector<HTMLElement>(`[data-idx="${selectedIndex}"]`);
     el?.scrollIntoView({ block: "nearest" });
-  }, [selected]);
+  }, [selectedIndex]);
 
   const spring = reduce
     ? { duration: 0 }
@@ -121,11 +131,11 @@ export function NotchSimulator({
           aria-expanded={expanded}
           aria-label="Toggle Clipz clipboard drawer"
           className={cn(
-            "glass flex w-full items-center gap-3 overflow-hidden rounded-[22px] px-4",
+            "flex w-full items-center gap-3 overflow-hidden rounded-[20px] border border-[var(--border-strong)] bg-[#121520] px-4 shadow-xl transition-colors hover:bg-[#161a28]",
             expanded ? "h-12 rounded-b-none border-b-0" : "h-12"
           )}
         >
-          <span className="grid h-6 w-6 place-items-center rounded-md bg-[var(--color-violet-deep)]/90 text-white">
+          <span className="grid h-6 w-6 place-items-center rounded-md bg-[var(--color-violet-deep)] text-white">
             <Scissors className="h-3.5 w-3.5" />
           </span>
           <span className="flex-1 text-left text-sm font-medium text-text">Clipz</span>
@@ -136,13 +146,10 @@ export function NotchSimulator({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="flex items-center gap-2 text-xs text-faint"
+                className="flex items-center gap-2 font-mono text-xs text-faint"
               >
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald opacity-60" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald" />
-                </span>
-                {CLIPS.length} clips
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald" />
+                {displayClips.length} clips
               </motion.span>
             ) : (
               <motion.span
@@ -150,7 +157,7 @@ export function NotchSimulator({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-[0.7rem] font-medium uppercase tracking-wider text-violet"
+                className="font-mono text-[0.7rem] font-medium uppercase tracking-wider text-violet"
               >
                 Live
               </motion.span>
@@ -224,8 +231,10 @@ export function NotchSimulator({
                   {clips.map((clip, i) => {
                     const Icon = CAT_ICON[clip.category];
                     const color = CAT_COLOR[clip.category];
-                    const isSel = i === selected;
+                    const isSel = i === selectedIndex;
                     const isCopied = copiedId === clip.id;
+                    const isHighlighted = highlightId === clip.id;
+
                     return (
                       <button
                         key={clip.id}
@@ -234,7 +243,8 @@ export function NotchSimulator({
                         onClick={() => copy(clip)}
                         className={cn(
                           "relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors",
-                          isSel ? "bg-white/[0.06]" : "hover:bg-white/[0.03]"
+                          isSel ? "bg-white/[0.06]" : "hover:bg-white/[0.03]",
+                          isHighlighted && "ring-1 ring-violet/50 bg-violet/10"
                         )}
                       >
                         {isSel && (

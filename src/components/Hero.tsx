@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { NotchSimulator } from "./NotchSimulator";
-import { Aurora } from "./ui/Aurora";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -10,12 +9,10 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden px-4 pb-20 pt-36 sm:pt-44"
+      className="relative overflow-hidden px-4 pb-24 pt-36 sm:pt-44"
     >
-      <Aurora />
-
       <div className="container-page flex flex-col items-center text-center">
-        <span className="mb-8 inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-faint">
+        <span className="mb-8 inline-flex items-center gap-3 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-faint">
           <span className="h-px w-6 bg-[var(--border-strong)]" />
           Clipboard, reimagined
           <span className="h-px w-6 bg-[var(--border-strong)]" />
@@ -33,7 +30,7 @@ export function Hero() {
         <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row">
           <a
             href="#download"
-            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-violet-deep)] px-6 py-3 text-[0.95rem] font-medium text-white transition-colors hover:bg-[var(--color-violet)]"
+            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-violet-deep)] px-6 py-3 text-[0.95rem] font-medium text-white transition-all duration-200 hover:bg-[var(--color-violet)] hover:shadow-[0_0_25px_rgba(139,124,255,0.3)] hover:scale-[1.02]"
           >
             <WindowsGlyph className="h-4 w-4" />
             Download for Windows
@@ -42,7 +39,7 @@ export function Hero() {
             href="https://github.com/56steve/clipz"
             target="_blank"
             rel="noreferrer"
-            className="text-[0.95rem] text-muted transition-colors hover:text-text"
+            className="rounded-full px-4 py-2.5 text-[0.95rem] text-muted transition-colors hover:bg-white/[0.04] hover:text-text"
           >
             View source &rarr;
           </a>
@@ -55,26 +52,46 @@ export function Hero() {
 
       <FadeUp reduce={reduce}>
         <div className="container-page mt-20">
-          <div className="relative mx-auto max-w-[980px]">
-            <div className="relative overflow-hidden rounded-[24px] border border-[var(--border)] bg-[#0a0a12] p-2 shadow-[0_50px_120px_-40px_rgba(0,0,0,0.9)]">
-              <div className="relative h-[380px] overflow-hidden rounded-[16px] bg-[radial-gradient(120%_100%_at_50%_-20%,#1a1730_0%,#0b0b14_55%,#08080d_100%)] sm:h-[440px]">
-                <div className="absolute left-8 top-24 hidden h-40 w-64 rotate-[-4deg] rounded-xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm sm:block" />
-                <div className="absolute right-10 top-32 hidden h-48 w-56 rotate-[3deg] rounded-xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm sm:block" />
-
-                <div className="absolute inset-x-0 top-3 z-10">
-                  <NotchSimulator defaultExpanded />
-                </div>
-
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#08080d] to-transparent" />
+          <figure className="relative mx-auto max-w-[980px]">
+            <ProductStage>
+              <div className="absolute inset-x-0 top-3 z-10">
+                <NotchSimulator defaultExpanded />
               </div>
-            </div>
-            <p className="mt-4 text-center font-mono text-[0.72rem] text-faint">
+            </ProductStage>
+            <figcaption className="mt-4 text-center font-mono text-[0.72rem] text-faint">
               hover to expand &middot; arrow keys and enter to navigate
-            </p>
-          </div>
+            </figcaption>
+          </figure>
         </div>
       </FadeUp>
     </section>
+  );
+}
+
+/**
+ * Product stage: a plain near-black canvas with a single soft ceiling light.
+ * No color wash, no drift. The product is the subject.
+ */
+function ProductStage({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[#0d0f17] shadow-2xl">
+      {/* Window Titlebar */}
+      <div className="flex items-center justify-between border-b border-[var(--border)] bg-[#12151f] px-4 py-3">
+        <div className="flex items-center gap-2">
+          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+        </div>
+        <div className="font-mono text-[0.72rem] text-faint">
+          Windows Desktop &middot; Clipz v2.0.1 Notch
+        </div>
+        <div className="w-12" />
+      </div>
+
+      <div className="relative h-[380px] overflow-hidden bg-[#090a0f] sm:h-[440px]">
+        {children}
+      </div>
+    </div>
   );
 }
 
