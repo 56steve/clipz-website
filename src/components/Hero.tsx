@@ -29,7 +29,7 @@ export function Hero() {
 
         <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row">
           <a
-            href="#download"
+            href="https://github.com/56steve/clipz/releases/download/main/Clipz_0.1.0_x64-setup.exe"
             className="inline-flex items-center gap-2 rounded-full bg-[var(--color-violet-deep)] px-6 py-3 text-[0.95rem] font-medium text-white transition-all duration-200 hover:bg-[var(--color-violet)] hover:shadow-[0_0_25px_rgba(139,124,255,0.3)] hover:scale-[1.02]"
           >
             <WindowsGlyph className="h-4 w-4" />
