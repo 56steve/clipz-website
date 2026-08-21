@@ -86,11 +86,11 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <a
-            href="#download"
+            href="https://github.com/56steve/clipz/releases/download/main/Clipz_0.1.0_x64-setup.exe"
             className="rounded-full bg-white/[0.06] px-4 py-1.5 text-sm font-medium text-text ring-1 ring-inset ring-white/10 transition-all hover:bg-white/[0.12] hover:ring-white/20"
           >
             Download
-          </a>
+          </a >
 
           {/* Mobile Menu Toggle */}
           <button
