@@ -55,10 +55,10 @@ export function Navbar() {
       >
         <a href="#top" className="flex items-center gap-2 text-[0.98rem] font-semibold tracking-tight">
           <span>Clipz</span>
-          <span className="flex items-center gap-1 rounded-md border border-[var(--border)] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[0.68rem] font-normal text-faint">
+          {/* <span className="flex items-center gap-1 rounded-md border border-[var(--border)] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[0.68rem] font-normal text-faint">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald" />
             v2.0.1
-          </span>
+          </span> */}
         </a>
 
         {/* Desktop Nav Links */}
