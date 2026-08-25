@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/cn";
-import { Play, RotateCcw, Search, ShieldCheck } from "@/components/ui/icons";
+import { Bell, Pin, Play, RotateCcw, Search, ShieldCheck } from "@/components/ui/icons";
 
 type Step = {
   index: string;
@@ -19,11 +19,11 @@ const STEPS: Step[] = [
     index: "01",
     eyebrow: "Capture",
     title: "Every copy, without the overhead.",
-    body: "A native Rust process listens directly to Win32 clipboard events. Text, links, code, and credentials are picked up the instant they land, then classified before they hit disk.",
+    body: "A native Rust process listens directly to OS clipboard events. Text, links, code, and credentials are picked up the instant they land, then classified before touching disk.",
     specs: [
-      "Win32 AddClipboardFormatListener",
-      "Rust core, <1% idle CPU",
-      "Auto-classified: text / code / link / secret",
+      "Native clipboardFormatListener API",
+      "Rust core with less than 1% idle CPU",
+      "Auto-classified: text, code, link, secret, reminder",
     ],
     visual: <CaptureVisual />,
   },
@@ -31,11 +31,11 @@ const STEPS: Step[] = [
     index: "02",
     eyebrow: "Recall",
     title: "Sub-millisecond search over your history.",
-    body: "Everything you copy is indexed in a local SQLite FTS5 table. Type in the notch and results narrow as fast as you can press keys, across 100k rows without a spinner.",
+    body: "Everything you copy is indexed in a local SQLite FTS5 table. Type in the notch and results narrow as fast as you press keys, across 100k rows without a spinner.",
     specs: [
-      "SQLite FTS5 full-text index",
+      "SQLite FTS5 full-text search index",
       "Category filter tabs, keyboard-driven",
-      "Paste back with Enter or Ctrl+1..9",
+      "Paste back with Enter or Ctrl/Cmd + 1..9",
     ],
     visual: <RecallVisual />,
     reverse: true,
@@ -44,13 +44,26 @@ const STEPS: Step[] = [
     index: "03",
     eyebrow: "Protect",
     title: "Credentials that clean up after themselves.",
-    body: "Anything the classifier marks as sensitive is sealed with the native Windows Data Protection API and dropped from RAM 60 seconds after capture. No cloud, no account, no telemetry.",
+    body: "Anything the classifier marks as sensitive is sealed with native system Data Protection APIs and dropped from RAM 60 seconds after capture. No cloud, no account, no telemetry.",
     specs: [
-      "Windows DPAPI, keyed to user account",
+      "Native DPAPI, keyed to active user session",
       "Plaintext scrubbed from RAM after 60s",
-      "Local-only SQLite DB, no network",
+      "Local-only SQLite DB, zero network calls",
     ],
     visual: <ProtectVisual />,
+  },
+  {
+    index: "04",
+    eyebrow: "Remind",
+    title: "Pin clips and set timed reminders.",
+    body: "Never lose a snippet or meeting link again. Pin crucial clips to the top of your notch or set timed reminders so Clipz pops up right when you need it.",
+    specs: [
+      "1-click clip pinning and custom snooze timers",
+      "Native desktop notifications on trigger",
+      "Keyboard shortcut Ctrl/Cmd + R for instant reminder",
+    ],
+    visual: <RemindVisual />,
+    reverse: true,
   },
 ];
 
@@ -63,7 +76,7 @@ export function HowItWorks() {
             How it works
           </h2>
           <span className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-faint">
-            Three parts
+            Four parts
           </span>
         </div>
 
@@ -313,7 +326,7 @@ function ProtectVisual() {
               className={cn(
                 "relative z-10 mt-1 h-2 w-2 shrink-0 rounded-full transition-all duration-300",
                 step.c.includes("emerald")
-                  ? "bg-emerald shadow-[0_0_8px_rgba(56,224,165,0.6)]"
+                  ? "bg-emerald"
                   : step.c.includes("amber")
                   ? "bg-amber"
                   : "bg-white/30"
@@ -326,6 +339,61 @@ function ProtectVisual() {
           </li>
         ))}
       </ol>
+    </div>
+  );
+}
+
+function RemindVisual() {
+  const [snoozeTime, setSnoozeTime] = useState("15m");
+  const [pinned, setPinned] = useState(true);
+
+  return (
+    <div className="matte-card rounded-xl p-5 font-mono text-[0.78rem]">
+      <div className="mb-4 flex items-center justify-between text-[0.68rem] uppercase tracking-[0.16em] text-faint">
+        <span>Reminders &amp; Pinning</span>
+        <span className="flex items-center gap-1 text-emerald font-semibold">
+          <Bell className="h-3 w-3" /> Active
+        </span>
+      </div>
+
+      <div className="rounded-lg border border-[var(--border-subtle)] bg-[#0d0f17] p-3.5">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setPinned(!pinned)}
+              className={cn(
+                "rounded p-1 transition-colors cursor-pointer",
+                pinned ? "bg-emerald/10 text-emerald" : "text-faint hover:text-text"
+              )}
+              title="Toggle pin"
+            >
+              <Pin className="h-3.5 w-3.5" />
+            </button>
+            <span className="font-semibold text-text">Team sync &amp; release notes</span>
+          </div>
+          <span className="text-[0.7rem] text-faint">Ctrl + R</span>
+        </div>
+
+        <div className="mt-3.5 flex items-center justify-between border-t border-[var(--border-subtle)] pt-3 text-[0.72rem]">
+          <span className="text-muted">Snooze preset:</span>
+          <div className="flex gap-1.5">
+            {["5m", "15m", "1h", "9am"].map((time) => (
+              <button
+                key={time}
+                onClick={() => setSnoozeTime(time)}
+                className={cn(
+                  "rounded px-2 py-0.5 transition-colors cursor-pointer",
+                  snoozeTime === time
+                    ? "bg-[var(--color-violet-deep)] text-white font-medium"
+                    : "bg-white/[0.04] text-faint hover:text-text"
+                )}
+              >
+                {time}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

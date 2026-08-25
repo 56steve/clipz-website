@@ -5,13 +5,18 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   ArrowDown,
   ArrowUp,
+  Bell,
   Check,
   Code2,
+  Copy,
   CornerDownLeft,
+  KeyRound,
   Link2,
   Lock,
   Scissors,
   Search,
+  ShieldCheck,
+  Timer,
   Type,
 } from "@/components/ui/icons";
 import { CATEGORIES, CLIPS, type Clip, type ClipCategory } from "@/lib/clips";
@@ -22,6 +27,7 @@ const CAT_ICON: Record<ClipCategory, typeof Type> = {
   code: Code2,
   link: Link2,
   secret: Lock,
+  reminder: Bell,
 };
 
 const CAT_COLOR: Record<ClipCategory, string> = {
@@ -29,6 +35,7 @@ const CAT_COLOR: Record<ClipCategory, string> = {
   code: "var(--color-blue)",
   link: "var(--color-cyan)",
   secret: "var(--color-amber)",
+  reminder: "var(--color-emerald)",
 };
 
 export interface NotchSimulatorProps {

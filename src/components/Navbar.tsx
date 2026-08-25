@@ -49,7 +49,7 @@ export function Navbar() {
         className={cn(
           "flex w-full max-w-[1120px] items-center justify-between gap-6 rounded-2xl px-5 py-3 transition-all duration-300",
           scrolled
-            ? "border border-[var(--border)] bg-[rgba(11,11,18,0.85)] backdrop-blur-xl shadow-xl"
+            ? "border border-[var(--border)] bg-[rgba(11,11,18,0.85)] backdrop-blur-xl"
             : "bg-transparent"
         )}
       >
@@ -118,7 +118,7 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="absolute top-16 left-4 right-4 z-40 rounded-2xl border border-[var(--border)] bg-[rgba(11,11,18,0.95)] p-4 backdrop-blur-2xl shadow-2xl md:hidden">
+        <div className="absolute top-16 left-4 right-4 z-40 rounded-2xl border border-[var(--border)] bg-[rgba(11,11,18,0.95)] p-4 backdrop-blur-2xl md:hidden">
           <ul className="flex flex-col gap-3">
             {LINKS.map((l) => (
               <li key={l.href}>

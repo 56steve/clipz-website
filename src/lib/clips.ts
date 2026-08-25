@@ -1,4 +1,4 @@
-export type ClipCategory = "text" | "code" | "link" | "secret";
+export type ClipCategory = "text" | "code" | "link" | "secret" | "reminder";
 
 export interface Clip {
   id: string;
@@ -13,6 +13,8 @@ export interface Clip {
   time: string;
   /** Language tag for code clips */
   lang?: string;
+  /** Pinned or timed reminder flag */
+  isReminder?: boolean;
 }
 
 export const CATEGORIES: {
@@ -25,9 +27,19 @@ export const CATEGORIES: {
   { key: "code", label: "Code", color: "var(--color-blue)" },
   { key: "link", label: "Links", color: "var(--color-cyan)" },
   { key: "secret", label: "Sensitive", color: "var(--color-amber)" },
+  { key: "reminder", label: "Reminders", color: "var(--color-emerald)" },
 ];
 
 export const CLIPS: Clip[] = [
+  {
+    id: "c0",
+    category: "reminder",
+    preview: "🔔 Reminder: Team sync & release check at 3:00 PM",
+    value: "Reminder: Team sync & release check at 3:00 PM",
+    source: "Reminders",
+    time: "pinned",
+    isReminder: true,
+  },
   {
     id: "c1",
     category: "code",
@@ -73,7 +85,7 @@ export const CLIPS: Clip[] = [
   {
     id: "c6",
     category: "text",
-    preview: "invoice #4821 — net 30, due Sept 2",
+    preview: "invoice #4821, net 30, due Sept 2",
     value: "invoice #4821, net 30, due Sept 2",
     source: "Gmail",
     time: "4m ago",

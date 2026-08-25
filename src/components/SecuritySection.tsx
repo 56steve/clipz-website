@@ -2,7 +2,7 @@ const MECHANISMS = [
   {
     n: "i",
     title: "DPAPI at rest",
-    body: "Sensitive rows are encrypted with the Windows Data Protection API before they touch disk. Keys are derived from the logged-in user account — nothing for you to manage, nothing to leak.",
+    body: "Sensitive rows are encrypted with native system Data Protection APIs before touching disk. Keys are derived from your user session: nothing to configure and zero cloud dependencies.",
   },
   {
     n: "ii",

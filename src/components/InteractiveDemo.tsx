@@ -151,7 +151,7 @@ export function InteractiveDemo() {
         </div>
 
         {/* Live Stage */}
-        <figure className="relative overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[#0d0f17] shadow-2xl">
+        <figure className="relative overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[#0d0f17]">
           <div className="flex items-center justify-between border-b border-[var(--border)] bg-[#12151f] px-4 py-3">
             <div className="flex items-center gap-2">
               <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
