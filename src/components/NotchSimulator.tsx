@@ -8,15 +8,13 @@ import {
   Bell,
   Check,
   Code2,
-  Copy,
   CornerDownLeft,
-  KeyRound,
   Link2,
   Lock,
   Scissors,
   Search,
-  ShieldCheck,
-  Timer,
+  Star,
+  ScanText,
   Type,
 } from "@/components/ui/icons";
 import { CATEGORIES, CLIPS, type Clip, type ClipCategory } from "@/lib/clips";
@@ -27,7 +25,9 @@ const CAT_ICON: Record<ClipCategory, typeof Type> = {
   code: Code2,
   link: Link2,
   secret: Lock,
+  ocr: ScanText,
   reminder: Bell,
+  favorite: Star,
 };
 
 const CAT_COLOR: Record<ClipCategory, string> = {
@@ -35,7 +35,9 @@ const CAT_COLOR: Record<ClipCategory, string> = {
   code: "var(--color-blue)",
   link: "var(--color-cyan)",
   secret: "var(--color-amber)",
+  ocr: "var(--color-violet-deep)",
   reminder: "var(--color-emerald)",
+  favorite: "var(--color-amber)",
 };
 
 export interface NotchSimulatorProps {
@@ -67,12 +69,17 @@ export function NotchSimulator({
   const clips = useMemo<Clip[]>(() => {
     const q = query.trim().toLowerCase();
     return displayClips
-      .filter((c) => (cat === "all" ? true : c.category === cat))
+      .filter((c) => {
+        if (cat === "all") return true;
+        if (cat === "favorite") return Boolean(c.isFavorite);
+        return c.category === cat;
+      })
       .filter(
         (c) =>
           q === "" ||
           c.preview.toLowerCase().includes(q) ||
-          c.source.toLowerCase().includes(q)
+          c.source.toLowerCase().includes(q) ||
+          (c.ocrText && c.ocrText.toLowerCase().includes(q))
       );
   }, [displayClips, cat, query]);
 

@@ -47,9 +47,10 @@ export const metadata: Metadata = {
   authors: [{ name: "Clipz" }],
   icons: {
     icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
       { url: "/clipz-website.png", type: "image/png" },
     ],
-    shortcut: "/clipz-website.png",
+    shortcut: "/icon.svg",
     apple: "/clipz-website.png",
   },
   openGraph: {
