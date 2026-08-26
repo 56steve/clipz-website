@@ -28,34 +28,52 @@ const SITE_URL = "https://clipz.app";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Clipz — The Dynamic Island Clipboard Hub for Windows",
-    template: "%s — Clipz",
+    default: "Clipz: Dynamic Island Clipboard Hub for Windows & macOS",
+    template: "%s | Clipz",
   },
   description:
-    "Clipz is a lightning-fast clipboard manager for Windows with a floating Dynamic Island notch. Real-time capture, sub-millisecond FTS5 search, smart categories, and DPAPI encryption. Free and open source.",
+    "Clipz is a lightning-fast clipboard manager for Windows & macOS with a floating Dynamic Island notch. Real-time capture, sub-millisecond FTS5 search, clip reminders, smart categories, and DPAPI encryption.",
   keywords: [
     "clipboard manager",
     "Windows clipboard",
+    "macOS clipboard",
     "Dynamic Island",
     "Tauri",
     "Rust",
     "clipboard history",
+    "reminders",
     "productivity",
   ],
   authors: [{ name: "Clipz" }],
+  icons: {
+    icon: [
+      { url: "/clipz-website.png", type: "image/png" },
+    ],
+    shortcut: "/clipz-website.png",
+    apple: "/clipz-website.png",
+  },
   openGraph: {
     type: "website",
     url: SITE_URL,
-    title: "Clipz — The Dynamic Island Clipboard Hub for Windows",
+    title: "Clipz: Dynamic Island Clipboard Hub for Windows & macOS",
     description:
-      "A floating notch clipboard manager for Windows. Real-time capture, instant search, and encrypted sensitive data.",
+      "A floating notch clipboard manager with real-time capture, instant search, timed clip reminders, and encrypted sensitive data.",
     siteName: "Clipz",
+    images: [
+      {
+        url: "/clipz-website.png",
+        width: 1200,
+        height: 630,
+        alt: "Clipz Logo",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Clipz — The Dynamic Island Clipboard Hub for Windows",
+    title: "Clipz: Dynamic Island Clipboard Hub for Windows & macOS",
     description:
-      "A floating notch clipboard manager for Windows. Real-time capture, instant search, and encrypted sensitive data.",
+      "A floating notch clipboard manager with real-time capture, instant search, timed clip reminders, and encrypted sensitive data.",
+    images: ["/clipz-website.png"],
   },
 };
 

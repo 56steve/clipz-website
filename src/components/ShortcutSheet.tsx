@@ -10,25 +10,28 @@ const ROWS: { title: string; items: Row[] }[] = [
   {
     title: "Navigation",
     items: [
-      { keys: <Kbd>↑</Kbd>, label: "Move up" },
-      { keys: <Kbd>↓</Kbd>, label: "Move down" },
-      { keys: <Kbd>Tab</Kbd>, label: "Cycle category" },
+      { keys: <Combo keys={["↑", "↓"]} />, label: "Navigate clips" },
+      { keys: <Kbd>Tab</Kbd>, label: "Cycle category filter" },
+      { keys: <Combo keys={["Ctrl / ⌘", "F"]} />, label: "Focus instant search" },
+      { keys: <Kbd>Esc</Kbd>, label: "Collapse notch" },
     ],
   },
   {
     title: "Actions",
     items: [
       { keys: <Kbd>Enter</Kbd>, label: "Paste selection" },
-      { keys: <Combo keys={["Ctrl", "F"]} />, label: "Focus search" },
-      { keys: <Kbd>Esc</Kbd>, label: "Close drawer" },
+      { keys: <Combo keys={["Ctrl / ⌘", "R"]} />, label: "Set clip reminder" },
+      { keys: <Combo keys={["Ctrl / ⌘", "P"]} />, label: "Pin snippet to top" },
+      { keys: <Combo keys={["Del / ⌥", "⌫"]} />, label: "Delete item" },
     ],
   },
   {
     title: "Global",
     items: [
-      { keys: <Combo keys={["Ctrl", "Shift", "V"]} />, label: "Summon Clipz" },
-      { keys: <Combo keys={["Ctrl", "1..9"]} />, label: "Paste nth recent" },
-      { keys: <Kbd>Del</Kbd>, label: "Remove highlighted" },
+      { keys: <Combo keys={["Ctrl / ⌘", "Shift", "V"]} />, label: "Summon Clipz notch" },
+      { keys: <Combo keys={["Ctrl / ⌘", "1..9"]} />, label: "Quick-paste nth item" },
+      { keys: <Combo keys={["Ctrl / ⌘", "Shift", "R"]} />, label: "Open Reminders list" },
+      { keys: <Combo keys={["Ctrl / ⌘", ","]} />, label: "Preferences" },
     ],
   },
 ];
@@ -61,7 +64,7 @@ export function ShortcutSheet() {
             Keyboard first.
           </h2>
           <span className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-faint">
-            Nine shortcuts
+            Twelve shortcuts
           </span>
         </div>
 
