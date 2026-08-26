@@ -1,11 +1,15 @@
+import Link from "next/link";
+
 const COLS: { title: string; links: { label: string; href: string }[] }[] = [
   {
     title: "Product",
     links: [
-      { label: "How it works", href: "#how" },
-      { label: "Security", href: "#security" },
-      { label: "Shortcuts", href: "#shortcuts" },
-      { label: "Download", href: "#download" },
+      { label: "How it works", href: "/#how" },
+      { label: "Security", href: "/#security" },
+      { label: "Shortcuts", href: "/#shortcuts" },
+      { label: "Download", href: "/#download" },
+      { label: "Changelog", href: "/changelog" },
+      { label: "Privacy Policy", href: "/privacy" },
     ],
   },
   {
@@ -16,25 +20,17 @@ const COLS: { title: string; links: { label: string; href: string }[] }[] = [
       { label: "Issues", href: "https://github.com/56steve/clipz/issues" },
     ],
   },
-  {
-    title: "Stack",
-    links: [
-      { label: "Rust + Tauri v2", href: "https://tauri.app" },
-      { label: "SQLite FTS5", href: "https://sqlite.org/fts5.html" },
-      { label: "Windows DPAPI", href: "https://learn.microsoft.com/windows/win32/seccng/cng-dpapi" },
-    ],
-  },
 ];
 
 export function Footer() {
   return (
     <footer className="border-t border-[var(--border)]">
-      <div className="container-page py-16">
-        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="container-page py-12 sm:py-14">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <a href="#top" className="text-[1.05rem] font-semibold tracking-tight">
+            <Link href="/" className="text-[1.05rem] font-semibold tracking-tight">
               Clipz
-            </a>
+            </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
               A Dynamic Island for your Windows clipboard. Local-first, MIT,
               built in Rust.
@@ -49,12 +45,21 @@ export function Footer() {
               <ul className="mt-4 flex flex-col gap-2.5">
                 {c.links.map((l) => (
                   <li key={l.label}>
-                    <a
-                      href={l.href}
-                      className="text-sm text-muted transition-colors hover:text-text"
-                    >
-                      {l.label}
-                    </a>
+                    {l.href.startsWith("/") ? (
+                      <Link
+                        href={l.href}
+                        className="text-sm text-muted transition-colors hover:text-text"
+                      >
+                        {l.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={l.href}
+                        className="text-sm text-muted transition-colors hover:text-text"
+                      >
+                        {l.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -62,8 +67,18 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-16 flex items-center justify-between border-t border-[var(--border)] pt-6 font-mono text-[0.72rem] text-faint">
-          <span>&copy; {new Date().getFullYear()} Clipz &middot; MIT</span>
+        <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-6 font-mono text-[0.72rem] text-faint">
+          <div className="flex items-center gap-3">
+            <span>&copy; {new Date().getFullYear()} Clipz &middot; MIT</span>
+            <span>&middot;</span>
+            <Link href="/changelog" className="transition-colors hover:text-text">
+              Changelog
+            </Link>
+            <span>&middot;</span>
+            <Link href="/privacy" className="transition-colors hover:text-text">
+              Privacy Policy
+            </Link>
+          </div>
           <span>v2.0.1</span>
         </div>
       </div>

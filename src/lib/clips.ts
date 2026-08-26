@@ -1,4 +1,4 @@
-export type ClipCategory = "text" | "code" | "link" | "secret" | "reminder";
+export type ClipCategory = "text" | "code" | "link" | "secret" | "ocr" | "reminder" | "favorite";
 
 export interface Clip {
   id: string;
@@ -15,6 +15,10 @@ export interface Clip {
   lang?: string;
   /** Pinned or timed reminder flag */
   isReminder?: boolean;
+  /** Favorite / starred clip flag */
+  isFavorite?: boolean;
+  /** Extracted OCR text if clip is an image */
+  ocrText?: string;
 }
 
 export const CATEGORIES: {
@@ -23,6 +27,8 @@ export const CATEGORIES: {
   color: string;
 }[] = [
   { key: "all", label: "All", color: "var(--color-violet)" },
+  { key: "favorite", label: "Favorites ⭐", color: "var(--color-amber)" },
+  { key: "ocr", label: "OCR Images 📷", color: "var(--color-violet-deep)" },
   { key: "text", label: "Text", color: "var(--color-muted)" },
   { key: "code", label: "Code", color: "var(--color-blue)" },
   { key: "link", label: "Links", color: "var(--color-cyan)" },
@@ -39,6 +45,17 @@ export const CLIPS: Clip[] = [
     source: "Reminders",
     time: "pinned",
     isReminder: true,
+    isFavorite: true,
+  },
+  {
+    id: "c-ocr1",
+    category: "ocr",
+    preview: "📷 [OCR] Screenshot: Server config port 8080 SSL=true",
+    value: "Server config port 8080 SSL=true\nHOST=127.0.0.1",
+    source: "Snipping Tool",
+    time: "just now",
+    ocrText: "Server config port 8080 SSL=true",
+    isFavorite: true,
   },
   {
     id: "c1",
@@ -48,6 +65,7 @@ export const CLIPS: Clip[] = [
     value: "let mut watcher = ClipboardWatcher::new();\nwatcher.on_change(|clip| store.insert(clip));",
     source: "VS Code",
     time: "just now",
+    isFavorite: true,
   },
   {
     id: "c2",
@@ -56,6 +74,15 @@ export const CLIPS: Clip[] = [
     value: "https://tauri.app/v2/guides/",
     source: "Arc",
     time: "12s ago",
+  },
+  {
+    id: "c-ocr2",
+    category: "ocr",
+    preview: "📷 [OCR] Slide diagram: Architecture & Data Pipeline",
+    value: "Architecture & Data Pipeline: Rust Core -> FTS5 SQLite -> Dynamic Island UI",
+    source: "PowerPoint",
+    time: "30s ago",
+    ocrText: "Architecture & Data Pipeline: Rust Core -> FTS5 SQLite -> Dynamic Island UI",
   },
   {
     id: "c3",
@@ -72,6 +99,7 @@ export const CLIPS: Clip[] = [
     value: "Ship the notch drawer before Friday standup.",
     source: "Notion",
     time: "1m ago",
+    isFavorite: true,
   },
   {
     id: "c5",

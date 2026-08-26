@@ -71,7 +71,7 @@ export function InteractiveDemo() {
   return (
     <section id="demo" className="section-pad border-t border-[var(--border)]">
       <div className="container-page">
-        <div className="mb-16 flex items-baseline justify-between gap-6 border-b border-[var(--border)] pb-6">
+        <div className="mb-10 sm:mb-12 flex items-baseline justify-between gap-6 border-b border-[var(--border)] pb-6">
           <h2 className="text-[clamp(1.75rem,3.2vw,2.5rem)] font-semibold tracking-[-0.02em]">
             Try it, right here.
           </h2>

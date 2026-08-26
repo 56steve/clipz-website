@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/cn";
-import { Bell, Pin, Play, RotateCcw, Search, ShieldCheck } from "@/components/ui/icons";
+import { Pin, Play, RotateCcw, ScanText, Search, ShieldCheck, Star } from "@/components/ui/icons";
 
 type Step = {
   index: string;
@@ -23,7 +23,7 @@ const STEPS: Step[] = [
     specs: [
       "Native clipboardFormatListener API",
       "Rust core with less than 1% idle CPU",
-      "Auto-classified: text, code, link, secret, reminder",
+      "Auto-classified: text, code, link, secret, image, reminder",
     ],
     visual: <CaptureVisual />,
   },
@@ -54,16 +54,28 @@ const STEPS: Step[] = [
   },
   {
     index: "04",
-    eyebrow: "Remind",
-    title: "Pin clips and set timed reminders.",
-    body: "Never lose a snippet or meeting link again. Pin crucial clips to the top of your notch or set timed reminders so Clipz pops up right when you need it.",
+    eyebrow: "OCR Engine",
+    title: "Extract text from screenshots automatically.",
+    body: "Copying an image or taking a screenshot? Clipz runs a fast, local OCR engine on-device to extract text from images in real time. Search text inside diagrams, receipts, or code screenshots instantly.",
     specs: [
+      "100% local on-device OCR processing",
+      "Instant text extraction from copied screenshots & images",
+      "Indexed automatically in SQLite FTS5 for search",
+    ],
+    visual: <OCRVisual />,
+    reverse: true,
+  },
+  {
+    index: "05",
+    eyebrow: "Organize & Remind",
+    title: "Star favorites, pin clips, and set timed reminders.",
+    body: "Mark your most used snippets, server links, and notes as Favorites for instant 1-click access. Pin crucial clips to the top of your notch or set timed reminders so Clipz pops up right when you need it.",
+    specs: [
+      "Star favorite clips for permanent quick access",
       "1-click clip pinning and custom snooze timers",
       "Native desktop notifications on trigger",
-      "Keyboard shortcut Ctrl/Cmd + R for instant reminder",
     ],
     visual: <RemindVisual />,
-    reverse: true,
   },
 ];
 
@@ -71,16 +83,16 @@ export function HowItWorks() {
   return (
     <section id="how" className="section-pad">
       <div className="container-page">
-        <div className="mb-24 flex items-baseline justify-between gap-6 border-b border-[var(--border)] pb-6">
+        <div className="mb-12 sm:mb-16 flex items-baseline justify-between gap-6 border-b border-[var(--border)] pb-6">
           <h2 className="text-[clamp(1.75rem,3.2vw,2.5rem)] font-semibold tracking-[-0.02em]">
             How it works
           </h2>
           <span className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-faint">
-            Four parts
+            Five parts
           </span>
         </div>
 
-        <div className="flex flex-col gap-32">
+        <div className="flex flex-col gap-16 sm:gap-20">
           {STEPS.map((s) => (
             <div
               key={s.index}
@@ -90,9 +102,8 @@ export function HowItWorks() {
               )}
             >
               <div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2.5">
                   <span className="font-mono text-sm text-faint">{s.index}</span>
-                  <span className="h-px w-8 bg-[var(--border-strong)]" />
                   <span className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-violet">
                     {s.eyebrow}
                   </span>
@@ -343,22 +354,81 @@ function ProtectVisual() {
   );
 }
 
-function RemindVisual() {
-  const [snoozeTime, setSnoozeTime] = useState("15m");
-  const [pinned, setPinned] = useState(true);
+function OCRVisual() {
+  const [extracting, setExtracting] = useState(false);
+  const [extractedText, setExtractedText] = useState("SERVER_PORT=8080 SSL_CERT=/etc/ssl/cert.pem");
+
+  function triggerOCR() {
+    setExtracting(true);
+    setTimeout(() => {
+      setExtracting(false);
+      setExtractedText("API_ENDPOINT=https://api.clipz.app/v2\nDB_PATH=/local/clipz.db");
+    }, 600);
+  }
 
   return (
     <div className="matte-card rounded-xl p-5 font-mono text-[0.78rem]">
       <div className="mb-4 flex items-center justify-between text-[0.68rem] uppercase tracking-[0.16em] text-faint">
-        <span>Reminders &amp; Pinning</span>
-        <span className="flex items-center gap-1 text-emerald font-semibold">
-          <Bell className="h-3 w-3" /> Active
+        <span>Local OCR Simulator</span>
+        <button
+          onClick={triggerOCR}
+          className="flex items-center gap-1.5 rounded-md border border-[var(--border)] bg-white/[0.04] px-2.5 py-1 text-[0.65rem] text-text transition-colors hover:bg-white/[0.08] cursor-pointer"
+        >
+          <ScanText className="h-3 w-3 text-violet" />
+          Simulate Screenshot OCR
+        </button>
+      </div>
+
+      <div className="rounded-lg border border-[var(--border-subtle)] bg-[#0d0f17] p-3.5 space-y-3">
+        <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2 text-[0.7rem] text-faint">
+          <span className="flex items-center gap-1.5 text-violet">
+            <ScanText className="h-3.5 w-3.5" /> Image Captured (PNG)
+          </span>
+          <span className="rounded bg-violet/10 px-1.5 py-0.5 text-violet font-medium">On-Device OCR</span>
+        </div>
+
+        <div className="rounded border border-dashed border-white/10 bg-white/[0.02] p-2.5">
+          {extracting ? (
+            <span className="animate-pulse text-violet text-xs">Scanning pixels &amp; extracting text...</span>
+          ) : (
+            <div className="text-left space-y-1">
+              <div className="text-[0.68rem] text-faint uppercase font-semibold">Extracted Text Buffer:</div>
+              <pre className="text-[0.75rem] text-emerald whitespace-pre-wrap">{extractedText}</pre>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RemindVisual() {
+  const [snoozeTime, setSnoozeTime] = useState("15m");
+  const [pinned, setPinned] = useState(true);
+  const [starred, setStarred] = useState(true);
+
+  return (
+    <div className="matte-card rounded-xl p-5 font-mono text-[0.78rem]">
+      <div className="mb-4 flex items-center justify-between text-[0.68rem] uppercase tracking-[0.16em] text-faint">
+        <span>Favorites &amp; Pinning</span>
+        <span className="flex items-center gap-1 text-amber font-semibold">
+          <Star className="h-3 w-3 fill-amber" /> Favorited
         </span>
       </div>
 
       <div className="rounded-lg border border-[var(--border-subtle)] bg-[#0d0f17] p-3.5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => setStarred(!starred)}
+              className={cn(
+                "rounded p-1 transition-colors cursor-pointer",
+                starred ? "text-amber" : "text-faint hover:text-text"
+              )}
+              title="Toggle favorite"
+            >
+              <Star className={cn("h-3.5 w-3.5", starred && "fill-amber")} />
+            </button>
             <button
               onClick={() => setPinned(!pinned)}
               className={cn(
