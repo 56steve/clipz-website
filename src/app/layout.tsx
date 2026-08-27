@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import Script from 'next/script';
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -93,7 +94,12 @@ export default function RootLayout({
       lang="en"
       className={`${outfit.variable} ${inter.variable} ${jetbrains.variable} h-full antialiased`}
     >
-      <body className="grain min-h-full">{children}</body>
+      <body className="grain min-h-full">{children}
+        <Script
+  src="https://cdn.oyechats.com/oyechats-widget.js"
+  data-bot-key="bot-b22566936b1b"
+  strategy="lazyOnload"
+/></body>
     </html>
   );
 }
