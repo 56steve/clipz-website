@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/next';
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -99,7 +100,9 @@ export default function RootLayout({
   src="https://cdn.oyechats.com/oyechats-widget.js"
   data-bot-key="bot-b22566936b1b"
   strategy="lazyOnload"
-/></body>
+/>
+        <Analytics />
+      </body>
     </html>
   );
 }
