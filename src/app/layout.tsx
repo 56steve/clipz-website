@@ -28,22 +28,27 @@ const SITE_URL = "https://clipz.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: "/",
+  },
   title: {
-    default: "Clipz: Dynamic Island Clipboard Hub for Windows & macOS",
+    default: "Clipz — Dynamic Island Clipboard Manager for Windows",
     template: "%s | Clipz",
   },
   description:
-    "Clipz is a lightning-fast clipboard manager for Windows & macOS with a floating Dynamic Island notch. Real-time capture, sub-millisecond FTS5 search, clip reminders, smart categories, and DPAPI encryption.",
+    "Clipz is a lightning-fast, privacy-first clipboard manager for Windows with a floating Dynamic Island notch. On-device OCR, sub-millisecond search, clip reminders, and DPAPI encryption.",
   keywords: [
     "clipboard manager",
-    "Windows clipboard",
-    "macOS clipboard",
-    "Dynamic Island",
-    "Tauri",
-    "Rust",
+    "Windows clipboard manager",
+    "Windows 11 clipboard",
+    "Dynamic Island for Windows",
     "clipboard history",
-    "reminders",
-    "productivity",
+    "clipboard OCR",
+    "Tauri clipboard app",
+    "Rust clipboard manager",
+    "Ditto alternative",
+    "clipboard reminders",
+    "productivity tools",
   ],
   authors: [{ name: "Clipz" }],
   icons: {
@@ -57,24 +62,24 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: SITE_URL,
-    title: "Clipz: Dynamic Island Clipboard Hub for Windows & macOS",
+    title: "Clipz — Dynamic Island Clipboard Manager for Windows",
     description:
-      "A floating notch clipboard manager with real-time capture, instant search, timed clip reminders, and encrypted sensitive data.",
+      "A floating notch clipboard manager for Windows with real-time capture, instant search, timed clip reminders, and encrypted sensitive data.",
     siteName: "Clipz",
     images: [
       {
         url: "/clipz-website.png",
         width: 1200,
         height: 630,
-        alt: "Clipz Logo",
+        alt: "Clipz - Dynamic Island Clipboard Manager for Windows",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Clipz: Dynamic Island Clipboard Hub for Windows & macOS",
+    title: "Clipz — Dynamic Island Clipboard Manager for Windows",
     description:
-      "A floating notch clipboard manager with real-time capture, instant search, timed clip reminders, and encrypted sensitive data.",
+      "A floating notch clipboard manager for Windows with real-time capture, instant search, timed clip reminders, and encrypted sensitive data.",
     images: ["/clipz-website.png"],
   },
 };
@@ -82,6 +87,33 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: "#060609",
   colorScheme: "dark",
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Clipz",
+  operatingSystem: "Windows 10, Windows 11",
+  applicationCategory: "UtilitiesApplication",
+  description:
+    "A lightning-fast, privacy-first clipboard manager for Windows with a floating Dynamic Island notch, on-device OCR, instant search, and clip reminders.",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+  featureList: [
+    "Dynamic Island floating notch interface",
+    "On-device OCR image-to-text extraction",
+    "Sub-millisecond SQLite FTS5 search",
+    "Timed clip reminders",
+    "Smart categories and favorites",
+    "DPAPI local encryption",
+    "Zero telemetry & 100% local-first",
+  ],
+  downloadUrl: "https://clipz.app/api/download",
+  softwareVersion: "2.0.1",
+  license: "https://opensource.org/licenses/MIT",
 };
 
 export default function RootLayout({
@@ -94,12 +126,20 @@ export default function RootLayout({
       lang="en"
       className={`${outfit.variable} ${inter.variable} ${jetbrains.variable} h-full antialiased`}
     >
-      <body className="grain min-h-full">{children}
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
+      <body className="grain min-h-full">
+        {children}
         <Script
-  src="https://cdn.oyechats.com/oyechats-widget.js"
-  data-bot-key="bot-b22566936b1b"
-  strategy="lazyOnload"
-/></body>
+          src="https://cdn.oyechats.com/oyechats-widget.js"
+          data-bot-key="bot-b22566936b1b"
+          strategy="lazyOnload"
+        />
+      </body>
     </html>
   );
 }
