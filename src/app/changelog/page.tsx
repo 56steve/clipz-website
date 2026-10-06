@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const RELEASES = [
   {
-    version: "v2.0.1",
+    version: "v0.1.4",
     date: "August 26, 2026",
     badge: "Latest",
     summary: "On-device OCR engine, clip favorites, and Win32 performance enhancements.",

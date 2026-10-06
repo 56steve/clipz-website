@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { NotchSimulator } from "./NotchSimulator";
+import { STORE_URL } from "@/lib/links";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -29,11 +30,19 @@ export function Hero() {
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <a
-            href="/api/download"
+            href={STORE_URL}
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-[var(--color-violet-deep)] px-6 py-3 text-[0.95rem] font-medium text-white transition-all duration-200 hover:bg-[var(--color-violet)] hover:scale-[1.02]"
           >
             <WindowsGlyph className="h-4 w-4" />
-            Download for Windows
+            Get it from Microsoft Store
+          </a>
+          <a
+            href="/api/download"
+            className="rounded-full px-4 py-2.5 text-[0.95rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
+          >
+            Direct download (.exe)
           </a>
           <a
             href="https://github.com/56steve/clipz"
@@ -83,7 +92,7 @@ function ProductStage({ children }: { children: React.ReactNode }) {
           <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
         </div>
         <div className="font-mono text-[0.72rem] text-faint">
-          Desktop Canvas &middot; Clipz v2.0.1 Notch
+          Desktop Canvas &middot; Clipz v0.1.4 Notch
         </div>
         <div className="w-12" />
       </div>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
+import { STORE_URL } from "@/lib/links";
 
 const LINKS = [
   { href: "/#how", label: "How it works" },
@@ -83,11 +84,13 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <a
-            href="/api/download"
+            href={STORE_URL}
+            target="_blank"
+            rel="noreferrer"
             className="rounded-full bg-white/[0.06] px-4 py-1.5 text-sm font-medium text-text ring-1 ring-inset ring-white/10 transition-all hover:bg-white/[0.12] hover:ring-white/20"
           >
-            Download
-          </a >
+            Get on Microsoft Store
+          </a>
 
           {/* Mobile Menu Toggle */}
           <button
