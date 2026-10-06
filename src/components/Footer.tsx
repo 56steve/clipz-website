@@ -79,7 +79,7 @@ export function Footer() {
               Privacy Policy
             </Link>
           </div>
-          <span>v2.0.1</span>
+          <span>v0.1.4</span>
         </div>
       </div>
     </footer>

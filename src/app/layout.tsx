@@ -122,7 +122,7 @@ const jsonLd = {
   downloadUrl: STORE_URL,
   installUrl: STORE_URL,
   sameAs: [STORE_URL, GITHUB_URL],
-  softwareVersion: "2.0.1",
+  softwareVersion: "0.1.4",
   license: "https://opensource.org/licenses/MIT",
 };
 

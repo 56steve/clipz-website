@@ -92,7 +92,7 @@ function ProductStage({ children }: { children: React.ReactNode }) {
           <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
         </div>
         <div className="font-mono text-[0.72rem] text-faint">
-          Desktop Canvas &middot; Clipz v2.0.1 Notch
+          Desktop Canvas &middot; Clipz v0.1.4 Notch
         </div>
         <div className="w-12" />
       </div>
