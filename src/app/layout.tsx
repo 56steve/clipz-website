@@ -3,6 +3,7 @@ import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
+import { STORE_URL, GITHUB_URL } from "@/lib/links";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -50,6 +51,12 @@ export const metadata: Metadata = {
     "Ditto alternative",
     "clipboard reminders",
     "productivity tools",
+    "Clipz Microsoft Store",
+    "clipboard manager Microsoft Store",
+    "clipboard history Windows 10",
+    "free clipboard manager",
+    "copy paste manager",
+    "paste history",
   ],
   authors: [{ name: "Clipz" }],
   icons: {
@@ -112,7 +119,9 @@ const jsonLd = {
     "DPAPI local encryption",
     "Zero telemetry & 100% local-first",
   ],
-  downloadUrl: "https://clipz.app/api/download",
+  downloadUrl: STORE_URL,
+  installUrl: STORE_URL,
+  sameAs: [STORE_URL, GITHUB_URL],
   softwareVersion: "2.0.1",
   license: "https://opensource.org/licenses/MIT",
 };

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check, Copy } from "@/components/ui/icons";
+import { STORE_URL } from "@/lib/links";
 
 function WindowsGlyph({ className }: { className?: string }) {
   return (
@@ -39,11 +40,19 @@ export function FinalCTA() {
         </h2>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
           <a
-            href="/api/download"
+            href={STORE_URL}
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-full bg-[var(--color-violet-deep)] px-7 py-3.5 text-[0.98rem] font-medium text-white transition-all duration-200 hover:bg-[var(--color-violet)]"
           >
             <WindowsGlyph className="h-4 w-4" />
-            Download for Windows
+            Get it from Microsoft Store
+          </a>
+          <a
+            href="/api/download"
+            className="rounded-full px-5 py-3 text-[0.98rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
+          >
+            Direct download (.exe)
           </a>
         </div>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-2 font-mono text-[0.72rem] text-faint">
