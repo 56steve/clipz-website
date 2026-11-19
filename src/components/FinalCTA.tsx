@@ -1,4 +1,4 @@
-import { STORE_URL } from "@/lib/links";
+import { APP_VERSION, STORE_URL } from "@/lib/links";
 
 function WindowsGlyph({ className }: { className?: string }) {
   return (
@@ -32,11 +32,17 @@ export function FinalCTA() {
             href="/api/download"
             className="rounded-full px-5 py-3 text-[0.98rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
           >
-            Direct download (.exe)
+            Windows installer (.exe)
+          </a>
+          <a
+            href="/api/download?platform=mac"
+            className="rounded-full px-5 py-3 text-[0.98rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
+          >
+            macOS (.dmg)
           </a>
         </div>
         <p className="mt-6 font-mono text-[0.72rem] text-faint">
-          v0.1.4 &middot; 4 MB &middot; Windows 10 / 11
+          v{APP_VERSION} &middot; Windows 10 / 11 &middot; macOS (Apple Silicon)
         </p>
       </div>
     </section>

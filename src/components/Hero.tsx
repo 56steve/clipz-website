@@ -1,8 +1,24 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import { HeroBolt } from "./HeroBolt";
 import { NotchSimulator } from "./NotchSimulator";
-import { STORE_URL } from "@/lib/links";
+import { APP_VERSION, GITHUB_URL, STORE_URL } from "@/lib/links";
+
+const BENEFITS: { title: string; body: string }[] = [
+  {
+    title: "Instant search",
+    body: "Full-text search across your whole clipboard history, as you type.",
+  },
+  {
+    title: "Private by design",
+    body: "Sensitive clips are encrypted, and everything stays on your device.",
+  },
+  {
+    title: "Keyboard first",
+    body: "Open with a shortcut, arrow to a clip, press Enter. No mouse needed.",
+  },
+];
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -12,20 +28,28 @@ export function Hero() {
       id="top"
       className="relative overflow-hidden px-4 pb-16 pt-28 sm:pt-32"
     >
-      <div className="container-page flex flex-col items-center text-center">
-        <span className="mb-6 inline-flex items-center gap-3 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-faint">
-          <span className="h-px w-6 bg-[var(--border-strong)]" />
-          Clipboard, reimagined
-          <span className="h-px w-6 bg-[var(--border-strong)]" />
-        </span>
+      <HeroBolt />
 
-        <h1 className="mx-auto max-w-4xl text-balance text-[clamp(2.75rem,6vw,5rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
-          A Dynamic Island for your desktop clipboard.
+      <div className="container-page relative flex flex-col items-center text-center">
+        <a
+          href={GITHUB_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="mb-6 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 font-mono text-[0.72rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-violet)]" />
+          Free &amp; open source on GitHub
+          <span aria-hidden>&rarr;</span>
+        </a>
+
+        <h1 className="mx-auto max-w-4xl text-balance text-[clamp(2.5rem,6vw,4.75rem)] font-semibold leading-[1.04] tracking-[-0.03em]">
+          A clipboard manager that lives in your notch.
         </h1>
 
         <p className="mx-auto mt-6 max-w-xl text-pretty text-[1.075rem] leading-relaxed text-muted">
-          Clipz lives in a floating notch at the top of your screen. It captures
-          everything you copy, categorizes it, sets timed reminders, and encrypts what matters.
+          Clipz captures everything you copy, sorts it, makes it instantly
+          searchable, sets timed reminders, and encrypts what matters. For
+          Windows and macOS.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -40,27 +64,39 @@ export function Hero() {
           </a>
           <a
             href="/api/download"
-            className="rounded-full px-4 py-2.5 text-[0.95rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
+            className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[0.95rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
           >
-            Direct download (.exe)
+            <WindowsGlyph className="h-3.5 w-3.5" />
+            Windows installer
           </a>
           <a
-            href="https://github.com/56steve/clipz"
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-full px-4 py-2.5 text-[0.95rem] text-muted transition-colors hover:bg-white/[0.04] hover:text-text"
+            href="/api/download?platform=mac"
+            className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[0.95rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
           >
-            View source &rarr;
+            <AppleGlyph className="h-3.5 w-3.5" />
+            macOS (.dmg)
           </a>
         </div>
 
         <p className="mt-5 font-mono text-[0.72rem] text-faint">
-          4 MB &middot; Windows 10 / 11 &middot; Rust + Tauri &middot; MIT
+          v{APP_VERSION} &middot; Windows 10 / 11 &middot; macOS (Apple Silicon)
+          &middot; Rust + Tauri &middot; MIT
         </p>
+
+        <ul className="mt-12 grid w-full max-w-3xl gap-6 text-left sm:grid-cols-3">
+          {BENEFITS.map((b) => (
+            <li key={b.title} className="border-l border-[var(--border-strong)] pl-4">
+              <h2 className="text-[0.95rem] font-semibold text-text">{b.title}</h2>
+              <p className="mt-1.5 text-[0.85rem] leading-relaxed text-muted">
+                {b.body}
+              </p>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <FadeUp reduce={reduce}>
-        <div className="container-page mt-12">
+        <div className="container-page relative mt-14">
           <figure className="relative mx-auto max-w-[980px]">
             <ProductStage>
               <div className="absolute inset-x-0 top-3 z-10">
@@ -92,7 +128,7 @@ function ProductStage({ children }: { children: React.ReactNode }) {
           <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
         </div>
         <div className="font-mono text-[0.72rem] text-faint">
-          Desktop Canvas &middot; Clipz v0.1.4 Notch
+          Desktop Canvas &middot; Clipz v{APP_VERSION} Notch
         </div>
         <div className="w-12" />
       </div>
@@ -131,4 +167,10 @@ function WindowsGlyph({ className }: { className?: string }) {
   );
 }
 
-
+function AppleGlyph({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.32c.67-.82 1.13-1.96.99-3.11-1 .04-2.19.67-2.88 1.48-.62.72-1.15 1.88-.99 3.01 1.12.09 2.22-.56 2.88-1.38z" />
+    </svg>
+  );
+}

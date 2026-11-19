@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
@@ -11,7 +12,6 @@ import {
   CornerDownLeft,
   Link2,
   Lock,
-  Scissors,
   Search,
   Star,
   ScanText,
@@ -149,9 +149,13 @@ export function NotchSimulator({
             expanded ? "h-12 rounded-b-none border-b-0" : "h-12"
           )}
         >
-          <span className="grid h-6 w-6 place-items-center rounded-md bg-[var(--color-violet-deep)] text-white">
-            <Scissors className="h-3.5 w-3.5" />
-          </span>
+          <Image
+            src="/app-icon.png"
+            alt=""
+            width={24}
+            height={24}
+            className="h-6 w-6 rounded-md"
+          />
           <span className="flex-1 text-left text-sm font-medium text-text">Clipz</span>
           <AnimatePresence mode="wait" initial={false}>
             {!expanded ? (

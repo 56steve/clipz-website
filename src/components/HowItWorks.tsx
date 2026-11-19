@@ -97,7 +97,7 @@ export function HowItWorks() {
             <div
               key={s.index}
               className={cn(
-                "grid items-center gap-14 lg:grid-cols-2",
+                "grid grid-cols-1 items-center gap-14 lg:grid-cols-2 [&>*]:min-w-0",
                 s.reverse && "lg:[&>*:first-child]:order-2"
               )}
             >

@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { APP_VERSION } from "@/lib/links";
 
 const COLS: { title: string; links: { label: string; href: string }[] }[] = [
   {
     title: "Product",
     links: [
+      { label: "Screenshots", href: "/#screenshots" },
       { label: "How it works", href: "/#how" },
       { label: "Security", href: "/#security" },
       { label: "Shortcuts", href: "/#shortcuts" },
@@ -32,8 +34,8 @@ export function Footer() {
               Clipz
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
-              A Dynamic Island for your Windows clipboard. Local-first, MIT,
-              built in Rust.
+              A clipboard manager that lives in your notch, for Windows and
+              macOS. Local-first, MIT, built in Rust.
             </p>
           </div>
 
@@ -79,7 +81,7 @@ export function Footer() {
               Privacy Policy
             </Link>
           </div>
-          <span>v0.1.4</span>
+          <span>v{APP_VERSION}</span>
         </div>
       </div>
     </footer>
