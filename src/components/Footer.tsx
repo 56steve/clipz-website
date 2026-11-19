@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { APP_VERSION } from "@/lib/links";
+import {
+  APP_VERSION,
+  BUG_REPORT_URL,
+  FEATURE_REQUEST_URL,
+  FEEDBACK_PATH,
+  STORE_URL,
+} from "@/lib/links";
 
 const COLS: { title: string; links: { label: string; href: string }[] }[] = [
   {
@@ -11,6 +17,15 @@ const COLS: { title: string; links: { label: string; href: string }[] }[] = [
       { label: "Download", href: "/#download" },
       { label: "Changelog", href: "/changelog" },
       { label: "Privacy Policy", href: "/privacy" },
+    ],
+  },
+  {
+    title: "Support",
+    links: [
+      { label: "Send feedback", href: FEEDBACK_PATH },
+      { label: "Rate on Microsoft Store", href: STORE_URL },
+      { label: "Report a bug", href: BUG_REPORT_URL },
+      { label: "Request a feature", href: FEATURE_REQUEST_URL },
     ],
   },
   {
@@ -27,9 +42,12 @@ export function Footer() {
   return (
     <footer className="border-t border-[var(--border)]">
       <div className="container-page py-12 sm:py-14">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
-          <div>
-            <Link href="/" className="text-[1.05rem] font-semibold tracking-tight">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:gap-x-10">
+          <div className="col-span-2 md:col-span-1">
+            <Link
+              href="/"
+              className="text-[1.05rem] font-semibold tracking-tight"
+            >
               Clipz
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
@@ -56,6 +74,8 @@ export function Footer() {
                     ) : (
                       <a
                         href={l.href}
+                        target="_blank"
+                        rel="noreferrer"
                         className="link-underline text-sm text-muted transition-colors hover:text-text"
                       >
                         {l.label}
@@ -72,11 +92,17 @@ export function Footer() {
           <div className="flex items-center gap-3">
             <span>&copy; {new Date().getFullYear()} Clipz &middot; MIT</span>
             <span>&middot;</span>
-            <Link href="/changelog" className="link-underline transition-colors hover:text-text">
+            <Link
+              href="/changelog"
+              className="link-underline transition-colors hover:text-text"
+            >
               Changelog
             </Link>
             <span>&middot;</span>
-            <Link href="/privacy" className="link-underline transition-colors hover:text-text">
+            <Link
+              href="/privacy"
+              className="link-underline transition-colors hover:text-text"
+            >
               Privacy Policy
             </Link>
           </div>

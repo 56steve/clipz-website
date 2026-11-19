@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
+  alternates: { canonical: "/privacy" },
   description: "Clipz privacy policy. Local-first architecture, no telemetry in the app, local encryption, and what this website uses.",
 };
 

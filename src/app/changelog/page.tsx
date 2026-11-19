@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Changelog",
+  alternates: { canonical: "/changelog" },
   description: "Release notes and version history for Clipz.",
 };
 
