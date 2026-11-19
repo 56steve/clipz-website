@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Static assets, including the prebuilt Clipz app demo, are not site source.
+    "public/**",
   ]),
 ]);
 

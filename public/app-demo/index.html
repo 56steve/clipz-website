@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clipz - Clipboard Notch Hub</title>
+  <link rel="stylesheet" href="./fonts.css">
+  <link rel="stylesheet" href="./demo.css">
+  <script src="./mock.js"></script>
+  <script type="module" crossorigin src="./assets/index-BLct6DY9.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BATh0XWD.css">
+</head>
+<body>
+  <!-- Floating Top-Center Dynamic Island Notch Shell -->
+  <div id="notch-shell" class="notch-shell state-pill collapsed">
+    
+    <!-- Collapsed Notch Header / Pill Bar -->
+    <header id="notch-header" class="notch-header" data-tauri-drag-region>
+      <div class="pill-brand" data-tauri-drag-region>
+        <span class="notch-logo-dot" data-tauri-drag-region></span>
+        <span class="notch-title" data-tauri-drag-region>CLIPZ</span>
+      </div>
+      <div class="pill-stream-preview" id="pill-preview" data-tauri-drag-region>
+        <span class="stream-text" id="stream-text" data-tauri-drag-region>Listening for copied clips...</span>
+      </div>
+      <div class="pill-actions">
+        <button id="notch-reminders-btn" class="icon-btn header-alarm-btn" title="Scheduled Reminders">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        </button>
+        <button id="toggle-expand-btn" class="icon-btn" title="Toggle Expand (Alt+C)">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Expanded Notch Drawer Body -->
+    <main id="notch-body" class="notch-body">
+      <!-- Search & Quick Filter Bar -->
+      <section class="search-section">
+        <div class="search-row">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="search-input" placeholder="Search..." autocomplete="off" />
+            <kbd class="shortcut-badge">Esc to collapse</kbd>
+          </div>
+          <button id="settings-btn" class="settings-btn-outer" title="Preferences">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </button>
+        </div>
+
+        <div class="filter-pills">
+          <button class="filter-btn active" data-filter="all">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            All
+          </button>
+          <button class="filter-btn" data-filter="pinned">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#f59e0b" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Pinned
+          </button>
+          <button class="filter-btn" data-filter="text">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            Text
+          </button>
+          <button class="filter-btn" data-filter="code">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            Code
+          </button>
+          <button class="filter-btn" data-filter="image">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            Images
+          </button>
+          <button class="filter-btn" data-filter="link">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            Links
+          </button>
+          <button class="filter-btn" data-filter="sensitive">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Sensitive
+          </button>
+        </div>
+      </section>
+
+      <!-- Clipboard Timeline Stream -->
+      <section class="timeline-section" id="timeline-section">
+        <div class="empty-state" id="empty-state">
+          <div class="empty-icon">📋</div>
+          <p>No clips recorded yet.</p>
+          <span>Copy text in any application to stream it here.</span>
+        </div>
+        <div class="clips-container" id="clips-container"></div>
+      </section>
+
+      <!-- Settings Panel inside Drawer Body -->
+      <section class="settings-panel hidden" id="settings-panel">
+        <div class="settings-header">
+          <button id="back-from-settings-btn" class="settings-back-btn" title="Back to Clips (Esc)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <span>Back</span>
+          </button>
+          <span class="settings-header-title">Preferences</span>
+          <span id="os-platform-badge" class="platform-badge"></span>
+        </div>
+
+        <div class="settings-content">
+          <div class="settings-section-title">GLOBAL SHORTCUT</div>
+          
+          <div class="setting-card">
+            <div class="setting-card-row">
+              <div class="setting-card-info">
+                <div class="setting-card-title">Summon Clipz</div>
+                <div class="setting-card-sub">Global keybinding to toggle Clipz from anywhere on your system</div>
+              </div>
+              
+              <div class="shortcut-input-group">
+                <span id="save-indicator" class="save-indicator hidden">✓ Saved</span>
+                <div class="keycap-pill" id="keycap-container" title="Click to change hotkey">
+                  <div id="keycap-display" class="keycap-display-text"></div>
+                </div>
+                <div class="shortcut-actions">
+                  <button id="reset-hotkey-btn" class="shortcut-icon-btn" title="Reset default">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                  </button>
+                  <button id="disable-hotkey-btn" class="shortcut-icon-btn" title="Disable shortcut">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                  </button>
+                  <button id="clear-hotkey-btn" class="shortcut-icon-btn" title="Clear hotkey">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recording Popover Box (matching reference image) -->
+            <div id="recording-popover" class="recording-popover hidden">
+              <div class="recording-display-box">
+                <span id="recording-status-text" class="recording-status-text">Type on your keyboard</span>
+              </div>
+              <div class="recording-popover-actions">
+                <button id="save-hotkey-btn" class="btn-save-changes">Save Changes</button>
+                <button id="cancel-hotkey-btn" class="btn-cancel-recording">Cancel</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-footer-note">
+            <span id="default-shortcut-hint">Default: <code>Alt + C</code> (Windows) &bull; <code>Cmd + Shift + C</code> (macOS)</span>
+          </div>
+
+          <div class="settings-section-title" style="margin-top: 16px;">APPLICATION MANAGEMENT</div>
+          <div class="setting-card danger-card">
+            <div class="setting-card-row">
+              <div class="setting-card-info">
+                <div class="setting-card-title text-danger">Disable & Uninstall Clipz</div>
+                <div class="setting-card-sub">Stop background services, clean autostart entries, and exit app</div>
+              </div>
+              <button id="uninstall-btn" class="btn btn-danger-outline">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+                <span>Disable / Uninstall</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Notch Footer / Status bar -->
+      <footer class="notch-footer" id="notch-footer">
+        <div class="status-shortcut">
+          <span class="key-hint">↑ ↓</span> navigate
+        </div>
+        <div class="status-shortcut">
+          <span class="key-hint">↵</span> paste
+        </div>
+        <div class="status-shortcut">
+          <span class="key-hint">esc</span> to close
+        </div>
+      </footer>
+    </main>
+
+    <!-- Paste History Modal Overlay -->
+    <div id="history-modal" class="modal-overlay hidden">
+      <div class="modal-content history-modal-content">
+        <div class="modal-header">
+          <h3>📜 Paste History</h3>
+          <button id="close-modal-btn" class="icon-btn">&times;</button>
+        </div>
+        <div class="modal-body" id="history-list"></div>
+      </div>
+    </div>
+
+    <!-- Set Clip Reminder Modal Overlay -->
+    <div id="reminder-modal" class="modal-overlay hidden">
+      <div class="modal-content reminder-modal-content">
+        <div class="modal-header">
+          <h3>⏰ Set Clip Reminder</h3>
+          <button id="close-reminder-modal-btn" class="icon-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="reminder-clip-preview" class="reminder-clip-preview"></div>
+          <div class="reminder-time-section">
+            <label for="reminder-datetime-input" class="reminder-label">Select Date & Time:</label>
+            <input type="datetime-local" id="reminder-datetime-input" class="reminder-datetime-input" />
+          </div>
+          <div class="reminder-presets">
+            <span class="preset-label">Quick options:</span>
+            <div class="preset-buttons">
+              <button class="preset-btn" data-preset="15m">+15 Min</button>
+              <button class="preset-btn" data-preset="1h">+1 Hour</button>
+              <button class="preset-btn" data-preset="4h">+4 Hours</button>
+              <button class="preset-btn" data-preset="tomorrow">Tomorrow 9 AM</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="clear-reminder-btn" class="btn btn-danger-outline hidden">Clear Reminder</button>
+          <button id="cancel-reminder-btn" class="btn btn-secondary">Cancel</button>
+          <button id="save-reminder-btn" class="btn btn-primary">Set Reminder</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scheduled Reminders Manager Modal Overlay -->
+    <div id="reminders-list-modal" class="modal-overlay hidden">
+      <div class="modal-content reminders-list-modal-content">
+        <div class="modal-header">
+          <h3>⏰ Scheduled Reminders</h3>
+          <button id="close-reminders-list-modal-btn" class="icon-btn">&times;</button>
+        </div>
+        <div class="modal-body" id="reminders-manager-list"></div>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal Overlay -->
+    <div id="delete-modal" class="modal-overlay hidden">
+      <div class="modal-content delete-modal-content">
+        <div class="modal-header">
+          <h3>🗑️ Delete Clip</h3>
+          <button id="close-delete-modal-btn" class="icon-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="delete-warning-text">Are you sure you want to permanently delete this clip?</p>
+          <div id="delete-clip-preview" class="delete-clip-preview"></div>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel-delete-btn" class="btn btn-secondary">Cancel</button>
+          <button id="confirm-delete-btn" class="btn btn-danger">Delete Permanently</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recognized Text (OCR) Modal -->
+    <div id="ocr-modal" class="modal-overlay hidden">
+      <div class="modal-content delete-modal-content">
+        <div class="modal-header">
+          <h3>📝 Text in Image</h3>
+          <button id="close-ocr-modal-btn" class="icon-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="ocr-modal-text" class="ocr-modal-text">Reading text from image…</div>
+        </div>
+        <div class="modal-footer">
+          <button id="close-ocr-btn" class="btn btn-secondary">Close</button>
+          <button id="copy-ocr-text-btn" class="btn btn-primary">Copy Text</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image Lightbox Modal -->
+    <div id="image-lightbox" class="lightbox-overlay hidden">
+      <div class="lightbox-top-actions">
+        <button id="lightbox-info-btn" class="lightbox-top-btn" title="Clip Information (i)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </button>
+        <button id="close-lightbox-btn" class="lightbox-top-btn close-btn" title="Close Preview">&times;</button>
+      </div>
+
+      <div id="lightbox-info-card" class="lightbox-info-card hidden">
+        <div class="info-card-header">
+          <h4>ℹ️ Image Details</h4>
+          <button id="close-lightbox-info-btn" class="icon-btn">&times;</button>
+        </div>
+        <div class="info-card-body">
+          <div class="info-item">
+            <span class="info-label">Captured From:</span>
+            <span id="lb-info-app" class="info-value"></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Captured Date:</span>
+            <span id="lb-info-date" class="info-value"></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Resolution:</span>
+            <span id="lb-info-dim" class="info-value"></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Times Pasted:</span>
+            <span id="lb-info-pastes" class="info-value"></span>
+          </div>
+          <div id="lb-ocr-section" class="ocr-section hidden" style="display:flex; flex-direction:column; gap:6px; margin-top:10px; border-top:1px solid rgba(255,255,255,0.08); padding-top:10px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; width:100%;">
+              <span class="info-label">📝 Recognized Text:</span>
+              <button id="lb-copy-ocr-btn" class="icon-btn" title="Copy Recognized Text" style="padding:2px 6px; cursor:pointer;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+            <div id="lb-ocr-text" class="ocr-text-box" style="width:100%; max-height:90px; overflow-y:auto; font-family:monospace; font-size:11px; background:rgba(0,0,0,0.3); padding:6px 8px; border-radius:6px; color:#e2e8f0; white-space:pre-wrap; word-break:break-word;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lightbox-container">
+        <img id="lightbox-img" class="lightbox-img" alt="Full Image Preview" />
+      </div>
+    </div>
+
+    <!-- Uninstall / Disable Confirmation Modal Overlay -->
+    <div id="uninstall-modal" class="modal-overlay hidden">
+      <div class="modal-content delete-modal-content">
+        <div class="modal-header">
+          <h3>⚠️ Disable & Uninstall Clipz</h3>
+          <button id="close-uninstall-modal-btn" class="icon-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="delete-warning-text">This will stop all background clipboard services, unregister global hotkeys, and remove startup entries from your system.</p>
+          <div class="uninstall-option-box" style="margin-top: 12px; display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" id="clean-db-checkbox" style="cursor: pointer;" />
+            <label for="clean-db-checkbox" style="font-size: 12px; color: var(--text-dim); cursor: pointer;">
+              Also delete all saved clips history and local database
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel-uninstall-btn" class="btn btn-secondary">Cancel</button>
+          <button id="confirm-uninstall-btn" class="btn btn-danger">Confirm & Uninstall</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

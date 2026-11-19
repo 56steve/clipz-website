@@ -1,183 +1,205 @@
 "use client";
 
-import { useState } from "react";
-import { NotchSimulator } from "./NotchSimulator";
-import { CLIPS, type Clip } from "@/lib/clips";
-import { Code2, Link2, Lock, Type, RefreshCw, Check } from "@/components/ui/icons";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Reveal } from "./motion/Reveal";
+import { WordReveal } from "./motion/WordReveal";
+import {
+  Check,
+  Code2,
+  Link2,
+  Lock,
+  RefreshCw,
+  Type,
+} from "@/components/ui/icons";
 
-const DEMO_PRESETS: Omit<Clip, "id" | "time">[] = [
+/**
+ * The stage is the real Clipz interface, built from the desktop app's own
+ * source and served from /app-demo. Only the backend is replaced (see
+ * public/app-demo/mock.js), so search, filters, keyboard use, pinning and the
+ * rest behave exactly as they do in the app.
+ */
+const DEMO_SRC = "/app-demo/index.html";
+/** Height of the demo window, in the app's own (unscaled) pixels. */
+const DEMO_HEIGHT = 560;
+/**
+ * The desktop window is designed for a wide canvas. On narrow screens it is
+ * laid out at this width and scaled down to fit, instead of being squeezed.
+ */
+const MIN_LOGICAL_WIDTH = 500;
+const FULL_SCALE_FROM = 640;
+
+type PresetCategory = "code" | "sensitive" | "link" | "text";
+
+interface Preset {
+  label: string;
+  category: PresetCategory;
+  content: string;
+  sourceApp: string;
+  secret?: string;
+  Icon: typeof Code2;
+}
+
+const PRESETS: Preset[] = [
   {
+    label: "Copy some code",
     category: "code",
-    lang: "ts",
-    preview: "const { data } = await supabase.from('clips').select('*');",
-    value: "const { data } = await supabase.from('clips').select('*');",
-    source: "VS Code",
+    content: "const { data } = await supabase.from('clips').select('*');",
+    sourceApp: "VS Code",
+    Icon: Code2,
   },
   {
-    category: "secret",
-    preview: "whsec_•••••••••••••••• (Stripe Webhook Secret)",
-    value: "whsec_9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d",
-    source: "Stripe Dashboard",
+    label: "Copy a secret",
+    category: "sensitive",
+    content: "\u{1F512} Password Protected",
+    sourceApp: "Stripe Dashboard",
+    secret: "whsec_9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d",
+    Icon: Lock,
   },
   {
+    label: "Copy a link",
     category: "link",
-    preview: "https://github.com/56steve/clipz/releases",
-    value: "https://github.com/56steve/clipz/releases",
-    source: "Browser",
+    content: "https://github.com/56steve/clipz/releases",
+    sourceApp: "Browser",
+    Icon: Link2,
   },
   {
+    label: "Copy some text",
     category: "text",
-    preview: "Review Q3 release notes & changelog before deploy.",
-    value: "Review Q3 release notes & changelog before deploy.",
-    source: "Notion",
+    content: "Review Q3 release notes & changelog before deploy.",
+    sourceApp: "Notion",
+    Icon: Type,
   },
 ];
 
 export function InteractiveDemo() {
-  const [clips, setClips] = useState<Clip[]>(CLIPS);
-  const [highlightId, setHighlightId] = useState<string | null>(null);
-  const [lastAction, setLastAction] = useState<string | null>(null);
+  const frameRef = useRef<HTMLIFrameElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [stageWidth, setStageWidth] = useState(0);
+  const [status, setStatus] = useState<string | null>(null);
+  const statusTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  function simulateCopy(preset: Omit<Clip, "id" | "time">) {
-    const newId = `custom-${clips.length + 1}-${preset.category}`;
-    const newClip: Clip = {
-      ...preset,
-      id: newId,
-      time: "just now",
+  const flash = useCallback((message: string) => {
+    setStatus(message);
+    if (statusTimer.current) clearTimeout(statusTimer.current);
+    statusTimer.current = setTimeout(() => setStatus(null), 2200);
+  }, []);
+
+  const post = useCallback((message: Record<string, unknown>) => {
+    frameRef.current?.contentWindow?.postMessage(
+      message,
+      window.location.origin,
+    );
+  }, []);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const observer = new ResizeObserver(([entry]) =>
+      setStageWidth(entry.contentRect.width),
+    );
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, []);
+
+  // The demo tells us when a visitor pastes a clip, so we can confirm it.
+  useEffect(() => {
+    const onMessage = (event: MessageEvent): void => {
+      if (event.origin !== window.location.origin) return;
+      if (event.source !== frameRef.current?.contentWindow) return;
+      if (event.data?.type === "clipz:copied") flash("Copied");
     };
+    window.addEventListener("message", onMessage);
+    return () => {
+      window.removeEventListener("message", onMessage);
+      if (statusTimer.current) clearTimeout(statusTimer.current);
+    };
+  }, [flash]);
 
-    try {
-      navigator.clipboard?.writeText(preset.value);
-    } catch {
-      /* ignore if permissions denied */
-    }
+  const simulate = (preset: Preset): void => {
+    post({
+      type: "clipz:add",
+      clip: {
+        category: preset.category,
+        content: preset.content,
+        source_app: preset.sourceApp,
+        secret: preset.secret,
+      },
+    });
+    flash("Captured");
+  };
 
-    setClips((prev) => [newClip, ...prev]);
-    setHighlightId(newId);
-    setLastAction(`Captured [${preset.category.toUpperCase()}] to notch!`);
+  const logicalWidth =
+    stageWidth >= FULL_SCALE_FROM ? stageWidth : MIN_LOGICAL_WIDTH;
+  const scale = stageWidth > 0 ? Math.min(1, stageWidth / logicalWidth) : 1;
 
-    setTimeout(() => {
-      setLastAction(null);
-    }, 2500);
-  }
-
-  function resetClips() {
-    setClips(CLIPS);
-    setHighlightId(null);
-    setLastAction("Reset to default clips");
-    setTimeout(() => setLastAction(null), 2000);
-  }
+  const reset = (): void => {
+    post({ type: "clipz:reset" });
+    flash("Reset");
+  };
 
   return (
     <section id="demo" className="section-pad border-t border-[var(--border)]">
       <div className="container-page">
-        <div className="mb-10 sm:mb-12 flex items-baseline justify-between gap-6 border-b border-[var(--border)] pb-6">
-          <h2 className="text-[clamp(1.75rem,3.2vw,2.5rem)] font-semibold tracking-[-0.02em]">
-            Try it, right here.
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-4 sm:mb-8">
+          <h2 className="text-[clamp(1.5rem,5vw,2.25rem)] font-light leading-[1.25] tracking-[-0.02em]">
+            <WordReveal lines={["Try it right here."]} />
           </h2>
-          <span className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-faint">
-            Live playground
-          </span>
-        </div>
 
-        <div className="mb-10 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <p className="max-w-xl text-[1rem] leading-relaxed text-muted">
-            The notch below is the exact component running live. Click any action
-            button below to simulate a Win32 clipboard event and watch it get captured,
-            classified, and indexed instantly.
-          </p>
-
-          <div className="flex items-center gap-3">
-            {lastAction && (
-              <span className="flex items-center gap-1.5 rounded-full border border-emerald/30 bg-emerald/10 px-3 py-1 font-mono text-xs text-emerald transition-all">
-                <Check className="h-3.5 w-3.5" />
-                {lastAction}
+          <div className="flex min-h-10 items-center gap-3">
+            {status && (
+              <span
+                role="status"
+                className="flex items-center gap-1.5 text-[0.875rem] text-emerald"
+              >
+                <Check className="h-4 w-4" />
+                {status}
               </span>
             )}
             <button
-              onClick={resetClips}
-              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-white/[0.03] px-3.5 py-1.5 font-mono text-xs text-faint transition-colors hover:bg-white/[0.08] hover:text-text cursor-pointer"
+              onClick={reset}
+              className="btn-depth-soft inline-flex min-h-10 cursor-pointer items-center gap-2 px-4 text-[0.875rem] font-medium"
             >
-              <RefreshCw className="h-3 w-3" /> Reset
+              <RefreshCw className="h-3.5 w-3.5" /> Reset
             </button>
           </div>
         </div>
 
-        {/* Interactive copy actions bar */}
-        <div className="mb-8 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
-          {DEMO_PRESETS.map((p, idx) => {
-            const Icon =
-              p.category === "code"
-                ? Code2
-                : p.category === "secret"
-                ? Lock
-                : p.category === "link"
-                ? Link2
-                : Type;
-
-            const accentColor =
-              p.category === "code"
-                ? "var(--color-blue)"
-                : p.category === "secret"
-                ? "var(--color-amber)"
-                : p.category === "link"
-                ? "var(--color-cyan)"
-                : "var(--color-muted)";
-
-            return (
-              <button
-                key={idx}
-                onClick={() => simulateCopy(p)}
-                className="group relative flex flex-col items-start gap-2 rounded-xl border border-[var(--border)] bg-black/40 p-3.5 text-left transition-all duration-200 hover:border-[var(--border-strong)] hover:bg-white/[0.04] cursor-pointer"
-              >
-                <div className="flex w-full items-center justify-between">
-                  <span
-                    className="inline-flex items-center gap-1.5 font-mono text-[0.68rem] uppercase tracking-wider font-medium"
-                    style={{ color: accentColor }}
-                  >
-                    <Icon className="h-3.5 w-3.5" />
-                    Simulate {p.category}
-                  </span>
-                  <span className="font-mono text-[0.65rem] text-faint opacity-0 transition-opacity group-hover:opacity-100">
-                    + Copy
-                  </span>
-                </div>
-                <span className="line-clamp-1 w-full font-mono text-[0.78rem] text-text">
-                  {p.preview}
-                </span>
-              </button>
-            );
-          })}
+        <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {PRESETS.map((preset) => (
+            <button
+              key={preset.category}
+              onClick={() => simulate(preset)}
+              className="btn-depth-soft flex min-h-12 cursor-pointer items-center justify-center gap-2 px-4 text-[0.875rem] font-medium"
+            >
+              <preset.Icon className="h-4 w-4 text-[var(--color-violet)]" />
+              {preset.label}
+            </button>
+          ))}
         </div>
 
-        {/* Live Stage */}
-        <figure className="relative overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[#0d0f17]">
-          <div className="flex items-center justify-between border-b border-[var(--border)] bg-[#12151f] px-4 py-3">
-            <div className="flex items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-              <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-              <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-            </div>
-            <div className="font-mono text-[0.72rem] text-faint">
-              Interactive Component Sandbox
-            </div>
-            <div className="w-12" />
+        <Reveal y={36}>
+          <div
+            ref={stageRef}
+            className="overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[#101012]"
+            style={{ height: DEMO_HEIGHT * scale }}
+          >
+            <iframe
+              ref={frameRef}
+              src={DEMO_SRC}
+              title="Clipz, running live in your browser"
+              loading="lazy"
+              className="block border-0"
+              style={{
+                colorScheme: "normal",
+                width: stageWidth > 0 ? logicalWidth : "100%",
+                height: DEMO_HEIGHT,
+                transform: scale < 1 ? `scale(${scale})` : undefined,
+                transformOrigin: "top left",
+              }}
+            />
           </div>
-          <div className="relative flex min-h-[500px] items-start justify-center bg-[#090a0f] px-4 pt-8 pb-12">
-            <div className="absolute inset-x-0 top-6 z-10">
-              <NotchSimulator
-                defaultExpanded
-                customClips={clips}
-                highlightId={highlightId}
-              />
-            </div>
-          </div>
-          <figcaption className="border-t border-[var(--border)] bg-[#11131a] py-3 text-center font-mono text-[0.72rem] text-faint">
-            Interactive live notch instance &middot; Try typing to search or click simulation pills above
-          </figcaption>
-        </figure>
+        </Reveal>
       </div>
     </section>
   );
 }
-

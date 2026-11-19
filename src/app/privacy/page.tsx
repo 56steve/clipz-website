@@ -4,7 +4,7 @@ import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Clipz privacy policy. Local-first architecture, zero telemetry, local encryption.",
+  description: "Clipz privacy policy. Local-first architecture, no telemetry in the app, local encryption, and what this website uses.",
 };
 
 export default function PrivacyPage() {
@@ -16,8 +16,8 @@ export default function PrivacyPage() {
           <h1 className="text-4xl font-semibold tracking-tight text-text sm:text-5xl">
             Privacy Policy
           </h1>
-          <p className="mt-4 font-mono text-[0.75rem] text-faint">
-            Last updated: August 26, 2026
+          <p className="mt-4 font-mono text-[0.78rem] text-faint">
+            Last updated: November 19, 2026
           </p>
 
           <div className="mt-10 space-y-10 text-[1.025rem] leading-relaxed text-muted">
@@ -38,7 +38,7 @@ export default function PrivacyPage() {
                   <strong className="text-text">Local Database:</strong> SQLite FTS5 stores history locally in your user profile directory.
                 </li>
                 <li>
-                  <strong className="text-text">Encryption:</strong> Sensitive clips marked as private are encrypted on disk using Windows Data Protection API (DPAPI), bound exclusively to your Windows user account.
+                  <strong className="text-text">Encryption:</strong> Sensitive clips are encrypted on disk. On Windows this uses the Data Protection API (DPAPI), bound to your Windows user account. On macOS it uses AES-256-GCM with a key file readable only by your user account.
                 </li>
                 <li>
                   <strong className="text-text">No External Servers:</strong> Clipz operates without remote database synchronization or cloud backup servers.
@@ -49,14 +49,35 @@ export default function PrivacyPage() {
             <section className="space-y-3">
               <h2 className="text-xl font-semibold text-text">Telemetry and Analytics</h2>
               <p>
-                Clipz contains zero analytics software, zero tracking scripts, and zero crash-reporting telemetry SDKs. The application makes no background network requests during standard operation.
+                The Clipz desktop application contains zero analytics software, zero tracking scripts, and zero crash-reporting telemetry SDKs. The application makes no background network requests during standard operation.
               </p>
+            </section>
+
+            <section className="space-y-3">
+              <h2 className="text-xl font-semibold text-text">This Website</h2>
+              <p>
+                The desktop app and this website are separate. The website is not part of the app and does not receive any of your clipboard data. When you visit it:
+              </p>
+              <ul className="list-disc space-y-2 pl-6 text-sm">
+                <li>
+                  <strong className="text-text">Hosting logs:</strong> our host, Vercel, processes standard web logs such as IP addresses and user agents for network delivery and security.
+                </li>
+                <li>
+                  <strong className="text-text">Page analytics:</strong> we use Vercel Web Analytics to count page views in aggregate. It does not use cookies to identify you.
+                </li>
+                <li>
+                  <strong className="text-text">Microsoft Store badge:</strong> the &quot;Get it from Microsoft&quot; badge is loaded from get.microsoft.com, so Microsoft receives standard request data such as your IP address and browser details when it loads, under Microsoft&apos;s privacy statement.
+                </li>
+                <li>
+                  <strong className="text-text">Chat widget:</strong> a support chat widget from OyeChats is loaded from cdn.oyechats.com. If you use it, the messages you send, and technical data such as your IP address, are processed by that provider under its own privacy policy. Do not type passwords or other sensitive information into it.
+                </li>
+              </ul>
             </section>
 
             <section className="space-y-3">
               <h2 className="text-xl font-semibold text-text">Third-Party Services</h2>
               <p>
-                The Clipz desktop application does not integrate with third-party tracking services or data brokers. If you visit this website, web hosting logs (such as IP addresses and user agents) may be processed by our static site host solely for network delivery and security enforcement.
+                The Clipz desktop application does not integrate with third-party tracking services or data brokers. The only third-party services involved with this website are the ones listed above.
               </p>
             </section>
 

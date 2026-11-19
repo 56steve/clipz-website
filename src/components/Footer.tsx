@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { APP_VERSION } from "@/lib/links";
 
 const COLS: { title: string; links: { label: string; href: string }[] }[] = [
   {
@@ -32,14 +33,14 @@ export function Footer() {
               Clipz
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
-              A Dynamic Island for your Windows clipboard. Local-first, MIT,
-              built in Rust.
+              A clipboard manager that lives in your notch, for Windows and
+              macOS. Local-first, MIT, built in Rust.
             </p>
           </div>
 
           {COLS.map((c) => (
             <div key={c.title}>
-              <h4 className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-faint">
+              <h4 className="text-[0.875rem] font-medium text-text">
                 {c.title}
               </h4>
               <ul className="mt-4 flex flex-col gap-2.5">
@@ -48,14 +49,14 @@ export function Footer() {
                     {l.href.startsWith("/") ? (
                       <Link
                         href={l.href}
-                        className="text-sm text-muted transition-colors hover:text-text"
+                        className="link-underline text-sm text-muted transition-colors hover:text-text"
                       >
                         {l.label}
                       </Link>
                     ) : (
                       <a
                         href={l.href}
-                        className="text-sm text-muted transition-colors hover:text-text"
+                        className="link-underline text-sm text-muted transition-colors hover:text-text"
                       >
                         {l.label}
                       </a>
@@ -67,19 +68,19 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-6 font-mono text-[0.72rem] text-faint">
+        <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-6 text-[0.875rem] text-faint">
           <div className="flex items-center gap-3">
             <span>&copy; {new Date().getFullYear()} Clipz &middot; MIT</span>
             <span>&middot;</span>
-            <Link href="/changelog" className="transition-colors hover:text-text">
+            <Link href="/changelog" className="link-underline transition-colors hover:text-text">
               Changelog
             </Link>
             <span>&middot;</span>
-            <Link href="/privacy" className="transition-colors hover:text-text">
+            <Link href="/privacy" className="link-underline transition-colors hover:text-text">
               Privacy Policy
             </Link>
           </div>
-          <span>v0.1.4</span>
+          <span>v{APP_VERSION}</span>
         </div>
       </div>
     </footer>

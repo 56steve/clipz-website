@@ -1,0 +1,2 @@
+/* Let the website show through around the real Clipz window. */
+html, body { background: transparent !important; overflow: hidden; }
