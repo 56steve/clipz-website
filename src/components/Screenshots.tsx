@@ -34,7 +34,7 @@ export function Screenshots() {
           <h2 className="text-[clamp(1.75rem,3.2vw,2.5rem)] font-semibold tracking-[-0.02em]">
             See it in action
           </h2>
-          <span className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-faint">
+          <span className="font-mono text-[0.78rem] uppercase tracking-[0.18em] text-faint">
             Sample data
           </span>
         </div>

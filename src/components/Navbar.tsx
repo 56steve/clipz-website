@@ -1,9 +1,19 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
-import { STORE_URL } from "@/lib/links";
+import { Github } from "@/components/ui/icons";
+import { GITHUB_URL, STORE_URL } from "@/lib/links";
+
+function WindowsGlyph({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+      <path d="M3 5.5 10.5 4.4v7.1H3V5.5Zm0 13 7.5 1.1v-7H3v5.9Zm8.5 1.2L21 21V12.5h-9.5v7.2Zm0-15.4v7.2H21V3l-9.5 1.3Z" />
+    </svg>
+  );
+}
 
 const LINKS = [
   { href: "/#how", label: "How it works" },
@@ -55,7 +65,14 @@ export function Navbar() {
             : "bg-transparent"
         )}
       >
-        <Link href="/" className="flex items-center gap-2 text-[0.98rem] font-semibold tracking-tight">
+        <Link href="/" className="flex items-center gap-2.5 text-[1.05rem] font-semibold tracking-tight">
+          <Image
+            src="/app-icon.png"
+            alt=""
+            width={28}
+            height={28}
+            className="h-7 w-7 rounded-md"
+          />
           <span>Clipz</span>
         </Link>
 
@@ -82,21 +99,34 @@ export function Navbar() {
           })}
         </ul>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Clipz on GitHub"
+            className="inline-flex h-10 items-center gap-2 rounded-full px-3 text-sm text-muted transition-colors hover:bg-white/[0.06] hover:text-text"
+          >
+            <Github className="h-5 w-5" />
+            <span className="hidden sm:inline">Star</span>
+          </a>
           <a
             href={STORE_URL}
             target="_blank"
             rel="noreferrer"
-            className="rounded-full bg-white/[0.06] px-4 py-1.5 text-sm font-medium text-text ring-1 ring-inset ring-white/10 transition-all hover:bg-white/[0.12] hover:ring-white/20"
+            aria-label="Get Clipz on the Microsoft Store"
+            className="inline-flex h-10 items-center gap-2 rounded-full bg-white/[0.06] px-3 text-sm font-medium text-text ring-1 ring-inset ring-white/10 transition-all hover:bg-white/[0.12] hover:ring-white/20 sm:px-4"
           >
-            Get on Microsoft Store
+            <WindowsGlyph className="h-4 w-4" />
+            <span className="hidden lg:inline">Get on Microsoft Store</span>
+            <span className="hidden sm:inline lg:hidden">Store</span>
           </a>
 
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen((v) => !v)}
             aria-label="Toggle navigation menu"
-            className="grid h-9 w-9 place-items-center rounded-lg border border-[var(--border)] bg-white/[0.03] text-muted md:hidden"
+            className="grid h-10 w-10 place-items-center rounded-lg border border-[var(--border)] bg-white/[0.03] text-muted md:hidden"
           >
             <svg
               className="h-4 w-4 stroke-current"

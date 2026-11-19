@@ -41,7 +41,7 @@ export function Footer() {
 
           {COLS.map((c) => (
             <div key={c.title}>
-              <h4 className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-faint">
+              <h4 className="font-mono text-[0.78rem] uppercase tracking-[0.16em] text-faint">
                 {c.title}
               </h4>
               <ul className="mt-4 flex flex-col gap-2.5">
@@ -69,7 +69,7 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-6 font-mono text-[0.72rem] text-faint">
+        <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-6 font-mono text-[0.78rem] text-faint">
           <div className="flex items-center gap-3">
             <span>&copy; {new Date().getFullYear()} Clipz &middot; MIT</span>
             <span>&middot;</span>

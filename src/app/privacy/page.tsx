@@ -16,7 +16,7 @@ export default function PrivacyPage() {
           <h1 className="text-4xl font-semibold tracking-tight text-text sm:text-5xl">
             Privacy Policy
           </h1>
-          <p className="mt-4 font-mono text-[0.75rem] text-faint">
+          <p className="mt-4 font-mono text-[0.78rem] text-faint">
             Last updated: November 19, 2026
           </p>
 
@@ -64,6 +64,9 @@ export default function PrivacyPage() {
                 </li>
                 <li>
                   <strong className="text-text">Page analytics:</strong> we use Vercel Web Analytics to count page views in aggregate. It does not use cookies to identify you.
+                </li>
+                <li>
+                  <strong className="text-text">Microsoft Store badge:</strong> the &quot;Get it from Microsoft&quot; badge is loaded from get.microsoft.com, so Microsoft receives standard request data such as your IP address and browser details when it loads, under Microsoft&apos;s privacy statement.
                 </li>
                 <li>
                   <strong className="text-text">Chat widget:</strong> a support chat widget from OyeChats is loaded from cdn.oyechats.com. If you use it, the messages you send, and technical data such as your IP address, are processed by that provider under its own privacy policy. Do not type passwords or other sensitive information into it.

@@ -1,23 +1,16 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { HeroBolt } from "./HeroBolt";
-import { NotchSimulator } from "./NotchSimulator";
-import { APP_VERSION, GITHUB_URL, STORE_URL } from "@/lib/links";
+import { StoreBadge } from "./StoreBadge";
+import { Keyboard, Lock, Search } from "@/components/ui/icons";
+import { APP_VERSION, GITHUB_URL } from "@/lib/links";
 
-const BENEFITS: { title: string; body: string }[] = [
-  {
-    title: "Instant search",
-    body: "Full-text search across your whole clipboard history, as you type.",
-  },
-  {
-    title: "Private by design",
-    body: "Sensitive clips are encrypted, and everything stays on your device.",
-  },
-  {
-    title: "Keyboard first",
-    body: "Open with a shortcut, arrow to a clip, press Enter. No mouse needed.",
-  },
+const HIGHLIGHTS: { label: string; Icon: typeof Search }[] = [
+  { label: "Instant search", Icon: Search },
+  { label: "Encrypted secrets", Icon: Lock },
+  { label: "Keyboard first", Icon: Keyboard },
 ];
 
 export function Hero() {
@@ -26,7 +19,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden px-4 pb-16 pt-28 sm:pt-32"
+      className="relative overflow-hidden px-4 pb-20 pt-28 sm:pt-32"
     >
       <HeroBolt />
 
@@ -35,108 +28,81 @@ export function Hero() {
           href={GITHUB_URL}
           target="_blank"
           rel="noreferrer"
-          className="mb-6 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 font-mono text-[0.72rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
+          className="mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 font-mono text-[0.82rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-violet)]" />
-          Free &amp; open source on GitHub
+          Free &amp; open source
           <span aria-hidden>&rarr;</span>
         </a>
 
-        <h1 className="mx-auto max-w-4xl text-balance text-[clamp(2.5rem,6vw,4.75rem)] font-semibold leading-[1.04] tracking-[-0.03em]">
-          A clipboard manager that lives in your notch.
+        <h1 className="mx-auto max-w-4xl text-balance text-[clamp(2.4rem,6vw,4.75rem)] font-semibold leading-[1.04] tracking-[-0.03em]">
+          Your clipboard,
+          <br />
+          living in the notch.
         </h1>
 
-        <p className="mx-auto mt-6 max-w-xl text-pretty text-[1.075rem] leading-relaxed text-muted">
-          Clipz captures everything you copy, sorts it, makes it instantly
-          searchable, sets timed reminders, and encrypts what matters. For
-          Windows and macOS.
+        <p className="mx-auto mt-6 max-w-lg text-pretty text-[1.1rem] leading-relaxed text-muted">
+          Everything you copy, captured, searchable and encrypted. For Windows
+          and macOS.
         </p>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <a
-            href={STORE_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-violet-deep)] px-6 py-3 text-[0.95rem] font-medium text-white transition-all duration-200 hover:bg-[var(--color-violet)] hover:scale-[1.02]"
-          >
-            <WindowsGlyph className="h-4 w-4" />
-            Get it from Microsoft Store
-          </a>
-          <a
-            href="/api/download"
-            className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[0.95rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
-          >
-            <WindowsGlyph className="h-3.5 w-3.5" />
-            Windows installer
-          </a>
-          <a
-            href="/api/download?platform=mac"
-            className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[0.95rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
-          >
-            <AppleGlyph className="h-3.5 w-3.5" />
-            macOS (.dmg)
-          </a>
+        <div className="mt-9 flex flex-col items-center gap-4">
+          <StoreBadge />
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <a
+              href="/api/download"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-[0.95rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
+            >
+              <WindowsGlyph className="h-4 w-4" />
+              Windows installer
+            </a>
+            <a
+              href="/api/download?platform=mac"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-[0.95rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
+            >
+              <AppleGlyph className="h-4 w-4" />
+              macOS (.dmg)
+            </a>
+          </div>
         </div>
 
-        <p className="mt-5 font-mono text-[0.72rem] text-faint">
-          v{APP_VERSION} &middot; Windows 10 / 11 &middot; macOS (Apple Silicon)
-          &middot; Rust + Tauri &middot; MIT
-        </p>
-
-        <ul className="mt-12 grid w-full max-w-3xl gap-6 text-left sm:grid-cols-3">
-          {BENEFITS.map((b) => (
-            <li key={b.title} className="border-l border-[var(--border-strong)] pl-4">
-              <h2 className="text-[0.95rem] font-semibold text-text">{b.title}</h2>
-              <p className="mt-1.5 text-[0.85rem] leading-relaxed text-muted">
-                {b.body}
-              </p>
+        <ul className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+          {HIGHLIGHTS.map(({ label, Icon }) => (
+            <li
+              key={label}
+              className="inline-flex items-center gap-2 text-[0.95rem] text-text"
+            >
+              <Icon className="h-4 w-4 text-[var(--color-violet)]" />
+              {label}
             </li>
           ))}
         </ul>
+
+        <p className="mt-5 font-mono text-[0.82rem] text-faint">
+          {`v${APP_VERSION} · Windows 10/11 · macOS Apple Silicon · MIT`}
+        </p>
       </div>
 
       <FadeUp reduce={reduce}>
         <div className="container-page relative mt-14">
-          <figure className="relative mx-auto max-w-[980px]">
-            <ProductStage>
-              <div className="absolute inset-x-0 top-3 z-10">
-                <NotchSimulator defaultExpanded />
-              </div>
-            </ProductStage>
-            <figcaption className="mt-4 text-center font-mono text-[0.72rem] text-faint">
-              hover to expand &middot; arrow keys and enter to navigate
-            </figcaption>
-          </figure>
+          <div className="relative mx-auto max-w-[1040px]">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -inset-x-10 -bottom-10 top-1/3 -z-0 bg-[radial-gradient(60%_60%_at_50%_100%,rgba(124,134,255,0.28),transparent_70%)] blur-2xl"
+            />
+            <Image
+              src="/screenshots/drawer.png"
+              alt="The Clipz notch drawer listing recent clips with search and filters"
+              width={1920}
+              height={1080}
+              priority
+              sizes="(min-width: 1080px) 1040px, 100vw"
+              className="relative h-auto w-full rounded-2xl border border-[var(--border-strong)] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]"
+            />
+          </div>
         </div>
       </FadeUp>
     </section>
-  );
-}
-
-/**
- * Product stage: a plain near-black canvas with a single soft ceiling light.
- * No color wash, no drift. The product is the subject.
- */
-function ProductStage({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="relative overflow-hidden rounded-2xl border border-[var(--border-strong)] bg-[#0d0f17]">
-      {/* Window Titlebar */}
-      <div className="flex items-center justify-between border-b border-[var(--border)] bg-[#12151f] px-4 py-3">
-        <div className="flex items-center gap-2">
-          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-        </div>
-        <div className="font-mono text-[0.72rem] text-faint">
-          Desktop Canvas &middot; Clipz v{APP_VERSION} Notch
-        </div>
-        <div className="w-12" />
-      </div>
-
-      <div className="relative h-[380px] overflow-hidden bg-[#090a0f] sm:h-[440px]">
-        {children}
-      </div>
-    </div>
   );
 }
 

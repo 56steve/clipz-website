@@ -13,7 +13,7 @@
   /* Text */
   --color-text: #edf0f5;
   --color-muted: #949ba8;
-  --color-faint: #5c6370;
+  --color-faint: #8b93a1;
 
   /* Accents (functional & restrained) */
   --color-violet: #7c86ff;
@@ -150,3 +150,23 @@ h1, h2, h3, h4 {
   }
 }
 
+
+/* Keep the Microsoft Store badge a sensible size on every screen. */
+.store-badge {
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+}
+@media (max-width: 480px) {
+  .store-badge ms-store-badge {
+    zoom: 0.78;
+  }
+}
+
+/* Microsoft Store badge: show the plain link until the web component is defined. */
+.store-badge ms-store-badge:not(:defined) {
+  display: none;
+}
+.store-badge ms-store-badge:defined ~ .store-badge-fallback {
+  display: none;
+}

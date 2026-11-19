@@ -63,7 +63,7 @@ export function ShortcutSheet() {
           <h2 className="text-[clamp(1.75rem,3.2vw,2.5rem)] font-semibold tracking-[-0.02em]">
             Keyboard first.
           </h2>
-          <span className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-faint">
+          <span className="font-mono text-[0.78rem] uppercase tracking-[0.18em] text-faint">
             Twelve shortcuts
           </span>
         </div>
@@ -92,7 +92,7 @@ export function ShortcutSheet() {
         )}>
           {visibleGroups.map((g) => (
             <div key={g.title} className="matte-card rounded-xl p-5">
-              <h3 className="mb-6 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-violet">
+              <h3 className="mb-6 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-violet">
                 {g.title}
               </h3>
               <ul className="flex flex-col divide-y divide-[var(--border)]">

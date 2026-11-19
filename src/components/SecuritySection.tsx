@@ -32,7 +32,7 @@ export function SecuritySection() {
           <h2 className="text-[clamp(1.75rem,3.2vw,2.5rem)] font-semibold tracking-[-0.02em]">
             Security model
           </h2>
-          <span className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-faint">
+          <span className="font-mono text-[0.78rem] uppercase tracking-[0.18em] text-faint">
             Four mechanisms
           </span>
         </div>
@@ -48,25 +48,25 @@ export function SecuritySection() {
             <div className="mt-10 border-t border-[var(--border)] pt-6">
               <div className="grid grid-cols-2 gap-6 font-mono text-[0.78rem]">
                 <div>
-                  <div className="text-[0.68rem] uppercase tracking-[0.16em] text-faint">
+                  <div className="text-[0.78rem] uppercase tracking-[0.16em] text-faint">
                     Storage
                   </div>
                   <div className="mt-1 text-text">SQLite, DPAPI-sealed rows</div>
                 </div>
                 <div>
-                  <div className="text-[0.68rem] uppercase tracking-[0.16em] text-faint">
+                  <div className="text-[0.78rem] uppercase tracking-[0.16em] text-faint">
                     Network
                   </div>
                   <div className="mt-1 text-text">none</div>
                 </div>
                 <div>
-                  <div className="text-[0.68rem] uppercase tracking-[0.16em] text-faint">
+                  <div className="text-[0.78rem] uppercase tracking-[0.16em] text-faint">
                     Sensitive TTL
                   </div>
                   <div className="mt-1 text-text">60s in memory</div>
                 </div>
                 <div>
-                  <div className="text-[0.68rem] uppercase tracking-[0.16em] text-faint">
+                  <div className="text-[0.78rem] uppercase tracking-[0.16em] text-faint">
                     License
                   </div>
                   <div className="mt-1 text-text">MIT</div>

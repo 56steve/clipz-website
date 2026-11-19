@@ -87,7 +87,7 @@ export function HowItWorks() {
           <h2 className="text-[clamp(1.75rem,3.2vw,2.5rem)] font-semibold tracking-[-0.02em]">
             How it works
           </h2>
-          <span className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-faint">
+          <span className="font-mono text-[0.78rem] uppercase tracking-[0.18em] text-faint">
             Five parts
           </span>
         </div>
@@ -104,7 +104,7 @@ export function HowItWorks() {
               <div>
                 <div className="flex items-center gap-2.5">
                   <span className="font-mono text-sm text-faint">{s.index}</span>
-                  <span className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-violet">
+                  <span className="font-mono text-[0.78rem] uppercase tracking-[0.18em] text-violet">
                     {s.eyebrow}
                   </span>
                 </div>
@@ -114,11 +114,11 @@ export function HowItWorks() {
                 <p className="mt-5 max-w-md text-[1rem] leading-relaxed text-muted">
                   {s.body}
                 </p>
-                <ul className="mt-7 flex flex-col gap-2 border-l border-[var(--border)] pl-4">
+                <ul className="mt-7 flex flex-wrap gap-2">
                   {s.specs.map((spec) => (
                     <li
                       key={spec}
-                      className="font-mono text-[0.78rem] leading-relaxed text-faint"
+                      className="rounded-full px-3 py-1.5 font-mono text-[0.78rem] leading-snug text-muted ring-1 ring-inset ring-white/10"
                     >
                       {spec}
                     </li>
@@ -159,11 +159,11 @@ function CaptureVisual() {
 
   return (
     <div className="matte-card relative rounded-xl p-5">
-      <div className="mb-4 flex items-center justify-between font-mono text-[0.68rem] uppercase tracking-[0.16em] text-faint">
+      <div className="mb-4 flex items-center justify-between font-mono text-[0.78rem] uppercase tracking-[0.16em] text-faint">
         <span>clipboard stream</span>
         <button
           onClick={triggerWin32Event}
-          className="flex items-center gap-1.5 rounded-md border border-[var(--border)] bg-white/[0.04] px-2.5 py-1 text-[0.65rem] text-text transition-colors hover:bg-white/[0.08] cursor-pointer"
+          className="flex items-center gap-1.5 rounded-md border border-[var(--border)] bg-white/[0.04] px-2.5 py-1 text-[0.78rem] text-text transition-colors hover:bg-white/[0.08] cursor-pointer"
         >
           <Play className="h-2.5 w-2.5" />
           Simulate Win32 event
@@ -179,7 +179,7 @@ function CaptureVisual() {
             )}
           >
             <span
-              className="w-16 shrink-0 font-mono text-[0.68rem] uppercase tracking-wider font-medium"
+              className="w-16 shrink-0 font-mono text-[0.78rem] uppercase tracking-wider font-medium"
               style={{ color: e.c }}
             >
               {e.label}
@@ -222,7 +222,7 @@ function RecallVisual() {
           placeholder="Filter FTS5 database..."
           className="w-full bg-transparent text-[0.78rem] font-mono text-text focus:outline-none placeholder:text-faint"
         />
-        <span className="ml-auto rounded border border-[var(--border)] px-1.5 py-0.5 text-[0.62rem] text-faint">
+        <span className="ml-auto rounded border border-[var(--border)] px-1.5 py-0.5 text-[0.78rem] text-faint">
           FTS5
         </span>
       </div>
@@ -232,7 +232,7 @@ function RecallVisual() {
             key={t}
             onClick={() => setActiveTab(t)}
             className={cn(
-              "rounded-md px-2.5 py-0.5 font-mono text-[0.66rem] transition-colors cursor-pointer",
+              "rounded-md px-2.5 py-0.5 font-mono text-[0.78rem] transition-colors cursor-pointer",
               activeTab === t
                 ? "bg-white/[0.1] text-text font-semibold border border-white/10"
                 : "text-faint hover:text-muted"
@@ -253,7 +253,7 @@ function RecallVisual() {
               key={i}
               className="flex items-center gap-3 rounded-md px-2 py-1.5 hover:bg-white/[0.03]"
             >
-              <span className="font-mono text-[0.62rem] text-faint">0{i + 1}</span>
+              <span className="font-mono text-[0.78rem] text-faint">0{i + 1}</span>
               <span className="truncate font-mono text-[0.78rem] text-muted">
                 {item.text}
               </span>
@@ -261,7 +261,7 @@ function RecallVisual() {
           ))
         )}
       </div>
-      <div className="mt-4 flex items-center justify-between border-t border-[var(--border)] pt-3 font-mono text-[0.66rem] text-faint">
+      <div className="mt-4 flex items-center justify-between border-t border-[var(--border)] pt-3 font-mono text-[0.78rem] text-faint">
         <span>{filtered.length} matches</span>
         <span className="text-emerald font-medium">0.3 ms FTS5</span>
       </div>
@@ -289,7 +289,7 @@ function ProtectVisual() {
 
   return (
     <div className="matte-card rounded-xl p-5 font-mono text-[0.78rem]">
-      <div className="mb-4 flex items-center justify-between text-[0.68rem] uppercase tracking-[0.16em] text-faint">
+      <div className="mb-4 flex items-center justify-between text-[0.78rem] uppercase tracking-[0.16em] text-faint">
         <span>lifecycle simulator</span>
         {ramState === "normal" ? (
           <button
@@ -330,7 +330,7 @@ function ProtectVisual() {
             {i < arr.length - 1 && (
               <span className="absolute left-[38px] top-4 h-full w-px bg-[var(--border)]" />
             )}
-            <span className="w-14 shrink-0 pt-0.5 text-[0.7rem] text-faint">
+            <span className="w-14 shrink-0 pt-0.5 text-[0.78rem] text-faint">
               {step.t}
             </span>
             <span
@@ -345,7 +345,7 @@ function ProtectVisual() {
             />
             <div className="min-w-0 flex-1">
               <div className={cn("text-[0.82rem]", step.c)}>{step.label}</div>
-              <div className="text-[0.7rem] text-faint">{step.desc}</div>
+              <div className="text-[0.78rem] text-faint">{step.desc}</div>
             </div>
           </li>
         ))}
@@ -368,11 +368,11 @@ function OCRVisual() {
 
   return (
     <div className="matte-card rounded-xl p-5 font-mono text-[0.78rem]">
-      <div className="mb-4 flex items-center justify-between text-[0.68rem] uppercase tracking-[0.16em] text-faint">
+      <div className="mb-4 flex items-center justify-between text-[0.78rem] uppercase tracking-[0.16em] text-faint">
         <span>Local OCR Simulator</span>
         <button
           onClick={triggerOCR}
-          className="flex items-center gap-1.5 rounded-md border border-[var(--border)] bg-white/[0.04] px-2.5 py-1 text-[0.65rem] text-text transition-colors hover:bg-white/[0.08] cursor-pointer"
+          className="flex items-center gap-1.5 rounded-md border border-[var(--border)] bg-white/[0.04] px-2.5 py-1 text-[0.78rem] text-text transition-colors hover:bg-white/[0.08] cursor-pointer"
         >
           <ScanText className="h-3 w-3 text-violet" />
           Simulate Screenshot OCR
@@ -380,7 +380,7 @@ function OCRVisual() {
       </div>
 
       <div className="rounded-lg border border-[var(--border-subtle)] bg-[#0d0f17] p-3.5 space-y-3">
-        <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2 text-[0.7rem] text-faint">
+        <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-2 text-[0.78rem] text-faint">
           <span className="flex items-center gap-1.5 text-violet">
             <ScanText className="h-3.5 w-3.5" /> Image Captured (PNG)
           </span>
@@ -392,8 +392,8 @@ function OCRVisual() {
             <span className="animate-pulse text-violet text-xs">Scanning pixels &amp; extracting text...</span>
           ) : (
             <div className="text-left space-y-1">
-              <div className="text-[0.68rem] text-faint uppercase font-semibold">Extracted Text Buffer:</div>
-              <pre className="text-[0.75rem] text-emerald whitespace-pre-wrap">{extractedText}</pre>
+              <div className="text-[0.78rem] text-faint uppercase font-semibold">Extracted Text Buffer:</div>
+              <pre className="text-[0.78rem] text-emerald whitespace-pre-wrap">{extractedText}</pre>
             </div>
           )}
         </div>
@@ -409,7 +409,7 @@ function RemindVisual() {
 
   return (
     <div className="matte-card rounded-xl p-5 font-mono text-[0.78rem]">
-      <div className="mb-4 flex items-center justify-between text-[0.68rem] uppercase tracking-[0.16em] text-faint">
+      <div className="mb-4 flex items-center justify-between text-[0.78rem] uppercase tracking-[0.16em] text-faint">
         <span>Favorites &amp; Pinning</span>
         <span className="flex items-center gap-1 text-amber font-semibold">
           <Star className="h-3 w-3 fill-amber" /> Favorited
@@ -441,10 +441,10 @@ function RemindVisual() {
             </button>
             <span className="font-semibold text-text">Team sync &amp; release notes</span>
           </div>
-          <span className="text-[0.7rem] text-faint">Ctrl + R</span>
+          <span className="text-[0.78rem] text-faint">Ctrl + R</span>
         </div>
 
-        <div className="mt-3.5 flex items-center justify-between border-t border-[var(--border-subtle)] pt-3 text-[0.72rem]">
+        <div className="mt-3.5 flex items-center justify-between border-t border-[var(--border-subtle)] pt-3 text-[0.78rem]">
           <span className="text-muted">Snooze preset:</span>
           <div className="flex gap-1.5">
             {["5m", "15m", "1h", "9am"].map((time) => (

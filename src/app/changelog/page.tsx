@@ -108,12 +108,12 @@ export default function ChangelogPage() {
                       {rel.version}
                     </h2>
                     {rel.badge && (
-                      <span className="rounded-full border border-emerald/30 bg-emerald/10 px-2.5 py-0.5 font-mono text-[0.68rem] font-medium text-emerald">
+                      <span className="rounded-full border border-emerald/30 bg-emerald/10 px-2.5 py-0.5 font-mono text-[0.78rem] font-medium text-emerald">
                         {rel.badge}
                       </span>
                     )}
                   </div>
-                  <time className="font-mono text-[0.75rem] text-faint">
+                  <time className="font-mono text-[0.78rem] text-faint">
                     {rel.date}
                   </time>
                 </div>
@@ -126,7 +126,7 @@ export default function ChangelogPage() {
                   {rel.changes.map((grp) => (
                     <div key={grp.tag} className="space-y-3">
                       <span
-                        className={`inline-block rounded-md border px-2 py-0.5 font-mono text-[0.68rem] font-semibold uppercase tracking-wider ${grp.color}`}
+                        className={`inline-block rounded-md border px-2 py-0.5 font-mono text-[0.78rem] font-semibold uppercase tracking-wider ${grp.color}`}
                       >
                         {grp.tag}
                       </span>

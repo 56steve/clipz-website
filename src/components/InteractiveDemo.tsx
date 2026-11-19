@@ -75,7 +75,7 @@ export function InteractiveDemo() {
           <h2 className="text-[clamp(1.75rem,3.2vw,2.5rem)] font-semibold tracking-[-0.02em]">
             Try it, right here.
           </h2>
-          <span className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-faint">
+          <span className="font-mono text-[0.78rem] uppercase tracking-[0.18em] text-faint">
             Live playground
           </span>
         </div>
@@ -132,13 +132,13 @@ export function InteractiveDemo() {
               >
                 <div className="flex w-full items-center justify-between">
                   <span
-                    className="inline-flex items-center gap-1.5 font-mono text-[0.68rem] uppercase tracking-wider font-medium"
+                    className="inline-flex items-center gap-1.5 font-mono text-[0.78rem] uppercase tracking-wider font-medium"
                     style={{ color: accentColor }}
                   >
                     <Icon className="h-3.5 w-3.5" />
                     Simulate {p.category}
                   </span>
-                  <span className="font-mono text-[0.65rem] text-faint opacity-0 transition-opacity group-hover:opacity-100">
+                  <span className="font-mono text-[0.78rem] text-faint opacity-0 transition-opacity group-hover:opacity-100">
                     + Copy
                   </span>
                 </div>
@@ -158,7 +158,7 @@ export function InteractiveDemo() {
               <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
               <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
             </div>
-            <div className="font-mono text-[0.72rem] text-faint">
+            <div className="font-mono text-[0.78rem] text-faint">
               Interactive Component Sandbox
             </div>
             <div className="w-12" />
@@ -172,7 +172,7 @@ export function InteractiveDemo() {
               />
             </div>
           </div>
-          <figcaption className="border-t border-[var(--border)] bg-[#11131a] py-3 text-center font-mono text-[0.72rem] text-faint">
+          <figcaption className="border-t border-[var(--border)] bg-[#11131a] py-3 text-center font-mono text-[0.78rem] text-faint">
             Interactive live notch instance &middot; Try typing to search or click simulation pills above
           </figcaption>
         </figure>

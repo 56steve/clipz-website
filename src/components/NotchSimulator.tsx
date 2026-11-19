@@ -175,7 +175,7 @@ export function NotchSimulator({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="font-mono text-[0.7rem] font-medium uppercase tracking-wider text-violet"
+                className="font-mono text-[0.78rem] font-medium uppercase tracking-wider text-violet"
               >
                 Live
               </motion.span>
@@ -206,7 +206,7 @@ export function NotchSimulator({
                     placeholder="Search clipboard history..."
                     className="w-full bg-transparent text-sm text-text placeholder:text-faint focus:outline-none"
                   />
-                  <span className="shrink-0 rounded-md border border-[var(--border)] px-1.5 py-0.5 font-mono text-[0.65rem] text-faint">
+                  <span className="shrink-0 rounded-md border border-[var(--border)] px-1.5 py-0.5 font-mono text-[0.78rem] text-faint">
                     FTS5
                   </span>
                 </div>
@@ -289,7 +289,7 @@ export function NotchSimulator({
                           >
                             {clip.preview}
                           </span>
-                          <span className="mt-0.5 block truncate text-[0.7rem] text-faint">
+                          <span className="mt-0.5 block truncate text-[0.78rem] text-faint">
                             {clip.source} &middot; {clip.time}
                           </span>
                         </span>
@@ -300,7 +300,7 @@ export function NotchSimulator({
                               initial={{ opacity: 0, scale: 0.6 }}
                               animate={{ opacity: 1, scale: 1 }}
                               exit={{ opacity: 0 }}
-                              className="flex shrink-0 items-center gap-1 text-[0.7rem] font-medium text-emerald"
+                              className="flex shrink-0 items-center gap-1 text-[0.78rem] font-medium text-emerald"
                             >
                               <Check className="h-3.5 w-3.5" /> Copied
                             </motion.span>
@@ -324,7 +324,7 @@ export function NotchSimulator({
                 </div>
 
                 {/* Footer legend */}
-                <div className="mt-2 flex items-center justify-between border-t border-[var(--border)] px-1 pt-2.5 text-[0.68rem] text-faint">
+                <div className="mt-2 flex items-center justify-between border-t border-[var(--border)] px-1 pt-2.5 text-[0.78rem] text-faint">
                   <span className="flex items-center gap-1.5">
                     <ArrowUp className="h-3 w-3" />
                     <ArrowDown className="h-3 w-3" /> navigate

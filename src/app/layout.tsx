@@ -150,6 +150,11 @@ export default function RootLayout({
           data-bot-key="bot-d364c0690e73"
           strategy="lazyOnload"
         />
+        <Script
+          src="https://get.microsoft.com/badge/ms-store-badge.bundled.js"
+          type="module"
+          strategy="afterInteractive"
+        />
         <Analytics />
       </body>
     </html>
