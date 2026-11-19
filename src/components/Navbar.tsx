@@ -11,7 +11,12 @@ import { GITHUB_URL, STORE_URL } from "@/lib/links";
 
 function WindowsGlyph({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+      aria-hidden
+    >
       <path d="M3 5.5 10.5 4.4v7.1H3V5.5Zm0 13 7.5 1.1v-7H3v5.9Zm8.5 1.2L21 21V12.5h-9.5v7.2Zm0-15.4v7.2H21V3l-9.5 1.3Z" />
     </svg>
   );
@@ -46,7 +51,7 @@ export function Navbar() {
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
 
     sectionIds.forEach((id) => {
@@ -69,10 +74,13 @@ export function Navbar() {
           "flex w-full max-w-[1120px] items-center justify-between gap-6 rounded-2xl px-5 py-3 transition-all duration-300",
           scrolled
             ? "border border-[var(--border)] bg-[rgba(24,24,27,0.85)] backdrop-blur-xl"
-            : "bg-transparent"
+            : "bg-transparent",
         )}
       >
-        <Link href="/" className="flex items-center gap-2.5 text-[1.05rem] font-semibold tracking-tight">
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 text-[1.05rem] font-semibold tracking-tight"
+        >
           <Image
             src="/app-icon.png"
             alt=""
@@ -93,7 +101,9 @@ export function Navbar() {
                   href={l.href}
                   className={cn(
                     "relative text-sm transition-colors py-1",
-                    isActive ? "text-text font-medium" : "text-muted hover:text-text"
+                    isActive
+                      ? "text-text font-medium"
+                      : "text-muted hover:text-text",
                   )}
                 >
                   {l.label}
@@ -112,10 +122,9 @@ export function Navbar() {
             target="_blank"
             rel="noreferrer"
             aria-label="Clipz on GitHub"
-            className="inline-flex h-10 items-center gap-2 rounded-full px-3 text-sm text-muted transition-colors hover:bg-white/[0.06] hover:text-text"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-muted transition-colors hover:bg-white/[0.06] hover:text-text"
           >
-            <Github className="h-5 w-5" />
-            <span className="hidden sm:inline">Star</span>
+            <Github className="h-[22px] w-[22px]" />
           </a>
           <a
             href={STORE_URL}
@@ -174,4 +183,3 @@ export function Navbar() {
     </motion.header>
   );
 }
-
