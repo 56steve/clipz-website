@@ -1,116 +1,106 @@
-"use client";
-
-import { useState } from "react";
 import { Kbd } from "./ui/Kbd";
-import { cn } from "@/lib/cn";
+import { Reveal } from "./motion/Reveal";
+import { WordReveal } from "./motion/WordReveal";
+import { ArrowDown, ArrowUp } from "@/components/ui/icons";
+import {
+  AppleGlyph,
+  CommandKeyGlyph,
+  ShiftKeyGlyph,
+  WindowsGlyph,
+} from "@/components/ui/PlatformGlyphs";
 
-type Row = { keys: React.ReactNode; label: string };
+type Row = { label: string; keys: React.ReactNode };
 
-const ROWS: { title: string; items: Row[] }[] = [
-  {
-    title: "Navigation",
-    items: [
-      { keys: <Combo keys={["↑", "↓"]} />, label: "Navigate clips" },
-      { keys: <Kbd>Tab</Kbd>, label: "Cycle category filter" },
-      { keys: <Combo keys={["Ctrl / ⌘", "F"]} />, label: "Focus instant search" },
-      { keys: <Kbd>Esc</Kbd>, label: "Collapse notch" },
-    ],
-  },
-  {
-    title: "Actions",
-    items: [
-      { keys: <Kbd>Enter</Kbd>, label: "Paste selection" },
-      { keys: <Combo keys={["Ctrl / ⌘", "R"]} />, label: "Set clip reminder" },
-      { keys: <Combo keys={["Ctrl / ⌘", "P"]} />, label: "Pin snippet to top" },
-      { keys: <Combo keys={["Del / ⌥", "⌫"]} />, label: "Delete item" },
-    ],
-  },
-  {
-    title: "Global",
-    items: [
-      { keys: <Combo keys={["Ctrl / ⌘", "Shift", "V"]} />, label: "Summon Clipz notch" },
-      { keys: <Combo keys={["Ctrl / ⌘", "1..9"]} />, label: "Quick-paste nth item" },
-      { keys: <Combo keys={["Ctrl / ⌘", "Shift", "R"]} />, label: "Open Reminders list" },
-      { keys: <Combo keys={["Ctrl / ⌘", ","]} />, label: "Preferences" },
-    ],
-  },
-];
+const ICON = "h-4 w-4";
 
-function Combo({ keys }: { keys: string[] }) {
+/** A platform logo followed by its key combo, e.g. [Windows] Alt + C. */
+function PlatformKeys({
+  logo,
+  name,
+  children,
+}: {
+  logo: React.ReactNode;
+  name: string;
+  children: React.ReactNode;
+}) {
   return (
-    <span className="flex items-center gap-1">
-      {keys.map((k, i) => (
-        <span key={k} className="flex items-center gap-1">
-          <Kbd>{k}</Kbd>
-          {i < keys.length - 1 && <span className="text-faint">+</span>}
-        </span>
-      ))}
+    <span className="flex items-center gap-3">
+      <span className="text-muted" role="img" aria-label={name}>
+        {logo}
+      </span>
+      <span className="flex items-center gap-1.5">{children}</span>
     </span>
   );
 }
 
+const ROWS: Row[] = [
+  {
+    label: "Open Clipz from anywhere",
+    keys: (
+      <span className="flex flex-wrap items-center justify-end gap-x-8 gap-y-3">
+        <PlatformKeys logo={<WindowsGlyph className="h-5 w-5" />} name="Windows">
+          <Kbd>Alt</Kbd>
+          <Kbd>C</Kbd>
+        </PlatformKeys>
+        <PlatformKeys logo={<AppleGlyph className="h-5 w-5" />} name="macOS">
+          <Kbd>
+            <CommandKeyGlyph className={ICON} />
+          </Kbd>
+          <Kbd>
+            <ShiftKeyGlyph className={ICON} />
+          </Kbd>
+          <Kbd>C</Kbd>
+        </PlatformKeys>
+      </span>
+    ),
+  },
+  {
+    label: "Move through clips",
+    keys: (
+      <span className="flex items-center gap-1.5">
+        <Kbd>
+          <ArrowUp className={ICON} />
+        </Kbd>
+        <Kbd>
+          <ArrowDown className={ICON} />
+        </Kbd>
+      </span>
+    ),
+  },
+  { label: "Paste the selected clip", keys: <Kbd>Enter</Kbd> },
+  { label: "Close the notch", keys: <Kbd>Esc</Kbd> },
+];
+
 export function ShortcutSheet() {
-  const [filter, setFilter] = useState("All");
-
-  const visibleGroups = ROWS.filter(
-    (g) => filter === "All" || g.title === filter
-  );
-
   return (
-    <section id="shortcuts" className="section-pad border-t border-[var(--border)]">
+    <section
+      id="shortcuts"
+      className="section-pad border-t border-[var(--border)]"
+    >
       <div className="container-page">
-        <div className="mb-10 flex items-baseline justify-between gap-6 border-b border-[var(--border)] pb-6">
-          <h2 className="text-[clamp(1.5rem,5vw,2.25rem)] font-semibold leading-[1.25] tracking-[-0.02em]">
-            Keyboard first.
-          </h2>
-          <span className="font-mono text-[0.78rem] uppercase tracking-[0.18em] text-faint">
-            Twelve shortcuts
-          </span>
-        </div>
+        <h2 className="mb-8 text-[clamp(1.5rem,5vw,2.25rem)] font-light leading-[1.25] tracking-[-0.02em] sm:mb-12">
+          <WordReveal lines={["Keyboard first."]} />
+        </h2>
 
-        {/* Filter controls */}
-        <div className="mb-10 flex gap-2">
-          {["All", "Navigation", "Actions", "Global"].map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className={cn(
-                "rounded-full px-3 py-1 font-mono text-xs transition-colors cursor-pointer",
-                filter === cat
-                  ? "bg-white/[0.1] text-text font-medium ring-1 ring-white/20"
-                  : "text-faint hover:text-muted hover:bg-white/[0.04]"
-              )}
-            >
-              {cat}
-            </button>
+        <ul className="divide-y divide-[var(--border)] border-y border-[var(--border)]">
+          {ROWS.map((row, i) => (
+            <li key={row.label} className="group">
+              <Reveal
+                delay={i * 0.08}
+                y={16}
+                className="flex flex-wrap items-center justify-between gap-4 py-5 transition-transform duration-300 group-hover:translate-x-1"
+              >
+                <span className="text-[1.125rem] text-text">{row.label}</span>
+                {row.keys}
+              </Reveal>
+            </li>
           ))}
-        </div>
+        </ul>
 
-        <div className={cn(
-          "grid gap-x-12 gap-y-12",
-          filter === "All" ? "md:grid-cols-3" : "grid-cols-1 max-w-lg"
-        )}>
-          {visibleGroups.map((g) => (
-            <div key={g.title} className="matte-card rounded-xl p-5">
-              <h3 className="mb-6 font-mono text-[0.78rem] uppercase tracking-[0.18em] text-violet">
-                {g.title}
-              </h3>
-              <ul className="flex flex-col divide-y divide-[var(--border)]">
-                {g.items.map((it, i) => (
-                  <li
-                    key={i}
-                    className="flex items-center justify-between gap-4 py-3.5 transition-colors hover:bg-white/[0.02] px-2 rounded-lg"
-                  >
-                    <span className="text-[0.95rem] text-muted">{it.label}</span>
-                    <span className="shrink-0">{it.keys}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+        <p className="mt-5 text-[0.875rem] text-faint">
+          You can change the global shortcut in Preferences.
+        </p>
       </div>
     </section>
   );
 }
-

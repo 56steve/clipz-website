@@ -5,10 +5,10 @@
 /* ------------------------------------------------------------------ */
 @theme {
   /* Soothing matte canvas */
-  --color-bg: #090a0f;
-  --color-bg-elevated: #0f1118;
-  --color-surface: #141720;
-  --color-surface-2: #1c202b;
+  --color-bg: #161618;
+  --color-bg-elevated: #1b1b1e;
+  --color-surface: #202024;
+  --color-surface-2: #2a2a2f;
 
   /* Text */
   --color-text: #edf0f5;
@@ -24,7 +24,7 @@
   --color-amber: #fbbf24;
 
   /* Fonts */
-  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono-jb), ui-monospace, "SFMono-Regular", monospace;
 
@@ -99,7 +99,7 @@ body {
 @layer base {
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 300;
     letter-spacing: -0.02em;
     line-height: 1.08;
   }
@@ -117,7 +117,7 @@ body {
   }
 
   .section-pad {
-    padding-block: clamp(3.5rem, 6vw, 5.5rem);
+    padding-block: clamp(3rem, 5vw, 4.5rem);
   }
 
   .matte-card {
@@ -127,21 +127,12 @@ body {
   }
 
   .glass {
-    background: rgba(18, 20, 27, 0.85);
+    background: rgba(30, 30, 34, 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border);
   }
 
-  .grain::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 60;
-    pointer-events: none;
-    opacity: 0.02;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -160,10 +151,9 @@ body {
   justify-content: center;
   max-width: 100%;
 }
-@media (max-width: 480px) {
-  .store-badge ms-store-badge {
-    zoom: 0.78;
-  }
+.store-badge ms-store-badge {
+  /* Microsoft's large artwork is 381px wide; 60% keeps it crisp but compact. */
+  zoom: 0.6;
 }
 
 /* Microsoft Store badge: show the plain link until the web component is defined. */
@@ -172,4 +162,167 @@ body {
 }
 .store-badge ms-store-badge:defined ~ .store-badge-fallback {
   display: none;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Depth buttons: fill, light inner edge, soft drop shadow, outer ring */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .btn-depth,
+  .btn-depth-soft {
+    position: relative;
+    isolation: isolate;
+    border-radius: 12px;
+    transition: transform 0.2s var(--ease-expo), box-shadow 0.2s ease,
+      filter 0.2s ease, background-color 0.2s ease;
+  }
+
+  .btn-depth {
+    --depth-stroke: 0.4;
+    color: #fff;
+    background-color: #296ff0;
+    box-shadow:
+      0 0 0 1px #296ff0,
+      0 3px 6px rgba(0, 0, 0, 0.2),
+      inset 0 0 6px 2px rgba(255, 255, 255, 0.24);
+  }
+
+  .btn-depth-soft {
+    --depth-stroke: 0.16;
+    color: var(--color-text);
+    background-color: rgba(255, 255, 255, 0.07);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 3px 6px rgba(0, 0, 0, 0.25),
+      inset 0 0 6px 2px rgba(255, 255, 255, 0.05);
+  }
+
+  /* Gradient stroke on the inside edge, brighter at the top. */
+  .btn-depth::after,
+  .btn-depth-soft::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, var(--depth-stroke)),
+      rgba(255, 255, 255, 0)
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  }
+
+  .btn-depth:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.08);
+    box-shadow:
+      0 0 0 1px #296ff0,
+      0 6px 16px rgba(41, 111, 240, 0.35),
+      inset 0 0 6px 2px rgba(255, 255, 255, 0.28);
+  }
+
+  .btn-depth-soft:hover {
+    transform: translateY(-1px);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .btn-depth:active,
+  .btn-depth-soft:active {
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Typewriter headline: characters appear one by one with a caret     */
+/* ------------------------------------------------------------------ */
+.tw-char {
+  position: relative;
+  opacity: 0;
+  animation: tw-show 0s linear forwards;
+  animation-delay: calc(var(--tw-start, 300ms) + var(--i) * var(--tw-step, 48ms));
+}
+
+.tw-char::after {
+  content: "";
+  position: absolute;
+  top: 0.12em;
+  bottom: 0.08em;
+  right: -0.07em;
+  width: max(2px, 0.05em);
+  border-radius: 2px;
+  background: var(--color-violet);
+  opacity: 0;
+  animation: tw-caret var(--tw-step, 48ms) steps(1, end) 1;
+  animation-delay: calc(var(--tw-start, 300ms) + var(--i) * var(--tw-step, 48ms));
+}
+
+/* The final caret keeps blinking for a few seconds, then disappears. */
+.tw-last::after {
+  animation: tw-blink 1s steps(1, end) 4;
+  animation-delay: calc(var(--tw-start, 300ms) + var(--i) * var(--tw-step, 48ms));
+}
+
+@keyframes tw-show {
+  to { opacity: 1; }
+}
+@keyframes tw-caret {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes tw-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tw-char { opacity: 1; animation: none; }
+  .tw-char::after { display: none; }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Link underline: draws in left to right on hover, exits to the right */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .link-underline {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 2px;
+  }
+
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.45s var(--ease-expo);
+  }
+
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Headline colour layer: transparent text that shows gradients set by HeroSmoke. */
+.hero-tint {
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-repeat: no-repeat;
+  /* Hidden until the headline has finished typing. */
+  opacity: 0;
+  animation: hero-tint-in 0s linear 2.2s forwards;
+}
+@keyframes hero-tint-in {
+  to { opacity: 1; }
 }

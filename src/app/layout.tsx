@@ -1,21 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Outfit, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
 import { STORE_URL, GITHUB_URL, SITE_URL, APP_VERSION } from "@/lib/links";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-  weight: ["600", "700"],
-  display: "swap",
-});
-
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "500", "600"],
   display: "swap",
 });
 
@@ -95,7 +88,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#060609",
+  themeColor: "#161618",
   colorScheme: "dark",
 };
 
@@ -135,7 +128,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${outfit.variable} ${inter.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${inter.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <head>
         <script
@@ -143,7 +136,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="grain min-h-full">
+      <body className="min-h-full">
         {children}
         <Script
           src="https://cdn.oyechats.com/oyechats-widget.js"

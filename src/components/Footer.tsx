@@ -5,7 +5,6 @@ const COLS: { title: string; links: { label: string; href: string }[] }[] = [
   {
     title: "Product",
     links: [
-      { label: "Screenshots", href: "/#screenshots" },
       { label: "How it works", href: "/#how" },
       { label: "Security", href: "/#security" },
       { label: "Shortcuts", href: "/#shortcuts" },
@@ -41,7 +40,7 @@ export function Footer() {
 
           {COLS.map((c) => (
             <div key={c.title}>
-              <h4 className="font-mono text-[0.78rem] uppercase tracking-[0.16em] text-faint">
+              <h4 className="text-[0.875rem] font-medium text-text">
                 {c.title}
               </h4>
               <ul className="mt-4 flex flex-col gap-2.5">
@@ -50,14 +49,14 @@ export function Footer() {
                     {l.href.startsWith("/") ? (
                       <Link
                         href={l.href}
-                        className="text-sm text-muted transition-colors hover:text-text"
+                        className="link-underline text-sm text-muted transition-colors hover:text-text"
                       >
                         {l.label}
                       </Link>
                     ) : (
                       <a
                         href={l.href}
-                        className="text-sm text-muted transition-colors hover:text-text"
+                        className="link-underline text-sm text-muted transition-colors hover:text-text"
                       >
                         {l.label}
                       </a>
@@ -69,15 +68,15 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-6 font-mono text-[0.78rem] text-faint">
+        <div className="mt-10 sm:mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-6 text-[0.875rem] text-faint">
           <div className="flex items-center gap-3">
             <span>&copy; {new Date().getFullYear()} Clipz &middot; MIT</span>
             <span>&middot;</span>
-            <Link href="/changelog" className="transition-colors hover:text-text">
+            <Link href="/changelog" className="link-underline transition-colors hover:text-text">
               Changelog
             </Link>
             <span>&middot;</span>
-            <Link href="/privacy" className="transition-colors hover:text-text">
+            <Link href="/privacy" className="link-underline transition-colors hover:text-text">
               Privacy Policy
             </Link>
           </div>

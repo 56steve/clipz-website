@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "motion/react";
+import { EASE_OUT_EXPO } from "./motion/ease";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
@@ -56,12 +58,17 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4">
+    <motion.header
+      initial={{ opacity: 0, y: -24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: EASE_OUT_EXPO }}
+      className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4"
+    >
       <nav
         className={cn(
           "flex w-full max-w-[1120px] items-center justify-between gap-6 rounded-2xl px-5 py-3 transition-all duration-300",
           scrolled
-            ? "border border-[var(--border)] bg-[rgba(11,11,18,0.85)] backdrop-blur-xl"
+            ? "border border-[var(--border)] bg-[rgba(24,24,27,0.85)] backdrop-blur-xl"
             : "bg-transparent"
         )}
       >
@@ -115,7 +122,7 @@ export function Navbar() {
             target="_blank"
             rel="noreferrer"
             aria-label="Get Clipz on the Microsoft Store"
-            className="inline-flex h-10 items-center gap-2 rounded-full bg-white/[0.06] px-3 text-sm font-medium text-text ring-1 ring-inset ring-white/10 transition-all hover:bg-white/[0.12] hover:ring-white/20 sm:px-4"
+            className="btn-depth inline-flex h-10 items-center gap-2 px-3 text-sm font-medium sm:px-4"
           >
             <WindowsGlyph className="h-4 w-4" />
             <span className="hidden lg:inline">Get on Microsoft Store</span>
@@ -148,7 +155,7 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="absolute top-16 left-4 right-4 z-40 rounded-2xl border border-[var(--border)] bg-[rgba(11,11,18,0.95)] p-4 backdrop-blur-2xl md:hidden">
+        <div className="absolute top-16 left-4 right-4 z-40 rounded-2xl border border-[var(--border)] bg-[rgba(24,24,27,0.95)] p-4 backdrop-blur-2xl md:hidden">
           <ul className="flex flex-col gap-3">
             {LINKS.map((l) => (
               <li key={l.href}>
@@ -164,7 +171,7 @@ export function Navbar() {
           </ul>
         </div>
       )}
-    </header>
+    </motion.header>
   );
 }
 

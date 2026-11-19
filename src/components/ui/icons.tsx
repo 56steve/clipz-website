@@ -14,7 +14,7 @@ function Svg({ children, ...props }: IconProps & { children: React.ReactNode }) 
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={2}
+      strokeWidth={1.75}
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
@@ -77,8 +77,8 @@ export const Link2 = (p: IconProps) => (
 
 export const Lock = (p: IconProps) => (
   <Svg {...p}>
-    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    <rect width="16" height="11" x="4" y="10.5" rx="3.5" />
+    <path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" />
   </Svg>
 );
 
@@ -94,8 +94,8 @@ export const Scissors = (p: IconProps) => (
 
 export const Search = (p: IconProps) => (
   <Svg {...p}>
-    <circle cx="11" cy="11" r="8" />
-    <path d="m21 21-4.3-4.3" />
+    <circle cx="10.5" cy="10.5" r="6.5" />
+    <path d="m15.5 15.5 5 5" />
   </Svg>
 );
 
@@ -151,16 +151,17 @@ export const KeyRound = (p: IconProps) => (
 
 export const Timer = (p: IconProps) => (
   <Svg {...p}>
-    <line x1="10" x2="14" y1="2" y2="2" />
-    <line x1="12" x2="15" y1="14" y2="11" />
-    <circle cx="12" cy="14" r="8" />
+    <circle cx="12" cy="13.5" r="7.5" />
+    <path d="M12 13.5V9.5" />
+    <path d="M9.5 3h5" />
+    <path d="M12 3v3" />
   </Svg>
 );
 
 export const Bell = (p: IconProps) => (
   <Svg {...p}>
-    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+    <path d="M6.5 9.5a5.5 5.5 0 0 1 11 0c0 5.2 2 6.7 2 6.7h-15s2-1.5 2-6.7" />
+    <path d="M10 19.5a2.2 2.2 0 0 0 4 0" />
   </Svg>
 );
 
@@ -188,7 +189,7 @@ export const Keyboard = (p: IconProps) => (
     <path d="M6 8h.01" />
     <path d="M7 16h10" />
     <path d="M8 12h.01" />
-    <rect width="20" height="16" x="2" y="4" rx="2" />
+    <rect width="20" height="15" x="2" y="4.5" rx="4" />
   </Svg>
 );
 
@@ -251,19 +252,19 @@ export const RefreshCw = (p: IconProps) => (
 
 export const Star = (p: IconProps) => (
   <Svg {...p}>
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    <polygon points="12 3.2 14.6 8.9 20.8 9.5 16.1 13.6 17.5 19.7 12 16.5 6.5 19.7 7.9 13.6 3.2 9.5 9.4 8.9" />
   </Svg>
 );
 
 export const ScanText = (p: IconProps) => (
   <Svg {...p}>
-    <path d="M3 7V5a2 2 0 0 1 2-2h2" />
-    <path d="M17 3h2a2 2 0 0 1 2 2v2" />
-    <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
-    <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
-    <path d="M7 8h10" />
-    <path d="M7 12h10" />
-    <path d="M7 16h6" />
+    <path d="M4 8V7a3 3 0 0 1 3-3h1" />
+    <path d="M16 4h1a3 3 0 0 1 3 3v1" />
+    <path d="M20 16v1a3 3 0 0 1-3 3h-1" />
+    <path d="M8 20H7a3 3 0 0 1-3-3v-1" />
+    <path d="M8 9.5h8" />
+    <path d="M8 12.5h8" />
+    <path d="M8 15.5h5" />
   </Svg>
 );
 

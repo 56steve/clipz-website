@@ -21,7 +21,7 @@ export function StoreBadge({ className }: { className?: string }) {
         href={STORE_URL}
         target="_blank"
         rel="noreferrer"
-        className="store-badge-fallback inline-flex items-center rounded-full bg-[var(--color-violet-deep)] px-6 py-3 text-[0.875rem] font-medium text-white transition-colors hover:bg-[var(--color-violet)]"
+        className="store-badge-fallback btn-depth inline-flex items-center px-6 py-3 text-[0.875rem] font-medium"
       >
         Get it from Microsoft Store
       </a>
