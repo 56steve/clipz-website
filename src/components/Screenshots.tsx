@@ -31,7 +31,7 @@ export function Screenshots() {
     >
       <div className="container-page">
         <div className="mb-12 flex items-baseline justify-between gap-6 border-b border-[var(--border)] pb-6">
-          <h2 className="text-[clamp(1.75rem,3.2vw,2.5rem)] font-semibold tracking-[-0.02em]">
+          <h2 className="text-[clamp(1.5rem,5vw,2.25rem)] font-semibold leading-[1.25] tracking-[-0.02em]">
             See it in action
           </h2>
           <span className="font-mono text-[0.78rem] uppercase tracking-[0.18em] text-faint">

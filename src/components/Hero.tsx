@@ -35,13 +35,13 @@ export function Hero() {
           <span aria-hidden>&rarr;</span>
         </a>
 
-        <h1 className="mx-auto max-w-4xl text-balance text-[clamp(2.4rem,6vw,4.75rem)] font-semibold leading-[1.04] tracking-[-0.03em]">
+        <h1 className="mx-auto max-w-4xl text-balance text-[clamp(2.19rem,9vw,3.75rem)] font-semibold leading-[1.04] tracking-[-0.04em]">
           Your clipboard,
           <br />
           living in the notch.
         </h1>
 
-        <p className="mx-auto mt-6 max-w-lg text-pretty text-[1.1rem] leading-relaxed text-muted">
+        <p className="mx-auto mt-6 max-w-lg text-pretty text-[1.125rem] leading-[1.56] text-muted">
           Everything you copy, captured, searchable and encrypted. For Windows
           and macOS.
         </p>
@@ -51,14 +51,14 @@ export function Hero() {
           <div className="flex flex-wrap items-center justify-center gap-3">
             <a
               href="/api/download"
-              className="inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-[0.95rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-[0.875rem] font-medium text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
             >
               <WindowsGlyph className="h-4 w-4" />
               Windows installer
             </a>
             <a
               href="/api/download?platform=mac"
-              className="inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-[0.95rem] text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-[0.875rem] font-medium text-muted ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.04] hover:text-text"
             >
               <AppleGlyph className="h-4 w-4" />
               macOS (.dmg)
