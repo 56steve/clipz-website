@@ -56,14 +56,6 @@ export const metadata: Metadata = {
     "paste history",
   ],
   authors: [{ name: "Clipz" }],
-  icons: {
-    icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/clipz-website.png", type: "image/png" },
-    ],
-    shortcut: "/icon.svg",
-    apple: "/clipz-website.png",
-  },
   openGraph: {
     type: "website",
     url: SITE_URL,
